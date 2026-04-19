@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sherlock Cheatsheet</title>
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --card-color: #2e2e40;
+      --text-color: #f4f4f4;
+      --accent-color: #4a90e2;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    h1 {
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .section code {
+      background: #111;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff5a0;
+      font-size: 0.95em;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      text-align: left;
+    }
+    th {
+      background-color: #346cb0;
+    }
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #346cb0;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--text-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+    .accordion:hover {
+      background-color: #508dd4;
+    }
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Sherlock Complete Cheatsheet</h1>
+
+    <button class="accordion">⚙️ Installation & Setup</button>
+    <div class="panel section">
+      <ul>
+        <li>Clone repo: <code>git clone https://github.com/sherlock-project/sherlock.git</code></li>
+        <li>Install dependencies: <code>pip install -r requirements.txt</code></li>
+        <li>Run tool: <code>python3 sherlock.py username</code></li>
+        <li>Supports Python 3.x</li>
+      </ul>
+    </div>
+
+    <button class="accordion">🔍 Basic Usage</button>
+    <div class="panel section">
+      <ul>
+        <li>Search for a single username: <code>python3 sherlock.py username</code></li>
+        <li>Search multiple usernames: <code>python3 sherlock.py user1 user2 user3</code></li>
+        <li>Save output to file: <code>python3 sherlock.py username -o output.txt</code></li>
+        <li>Use verbose output: <code>--verbose</code></li>
+      </ul>
+    </div>
+
+    <button class="accordion">🌐 Supported Platforms</button>
+    <div class="panel section">
+      <ul>
+        <li>Searches 300+ social media and website platforms including:</li>
+        <li>Twitter, Instagram, Facebook, TikTok, Reddit, GitHub, LinkedIn, YouTube, Pinterest, Tumblr, and more</li>
+        <li>Constantly updated platform list via GitHub repo</li>
+      </ul>
+    </div>
+
+    <button class="accordion">🧩 Advanced Options</button>
+    <div class="panel section">
+      <ul>
+        <li><code>--json</code> — Output results in JSON format</li>
+        <li><code>--timeout &lt;seconds&gt;</code> — Set network timeout (default 10s)</li>
+        <li><code>--proxy &lt;proxy_url&gt;</code> — Route requests through a proxy</li>
+        <li><code>--tor</code> — Route traffic through Tor network (requires Tor setup)</li>
+      </ul>
+    </div>
+
+    <button class="accordion">⚠️ Common Use Cases</button>
+    <div class="panel section">
+      <ul>
+        <li>OSINT investigations to find social media profiles by username</li>
+        <li>Checking username availability across platforms</li>
+        <li>Recon for penetration testing and bug bounty programs</li>
+        <li>Verifying online presence and footprint of targets</li>
+      </ul>
+    </div>
+
+    <button class="accordion">🛠️ Tips & Tricks</button>
+    <div class="panel section">
+      <ul>
+        <li>Combine with <code>grep</code> or other tools for filtering</li>
+        <li>Use <code>--timeout</code> to avoid delays on slow networks</li>
+        <li>Keep Sherlock updated for newest platform checks</li>
+        <li>Use in scripts to automate OSINT pipelines</li>
+      </ul>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #aaa;">
+      Made with 🔍 for OSINT Analysts & Investigators
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for(let i=0; i < acc.length; i++){
+      acc[i].addEventListener("click", function(){
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = (panel.style.display === "block") ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

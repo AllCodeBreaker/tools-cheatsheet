@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gobuster Cheatsheet</title>
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --card-color: #2e2e40;
+      --text-color: #f4f4f4;
+      --accent-color: #16a085;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    h1 {
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    code {
+      background: #111;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff5a0;
+      font-size: 0.95em;
+      word-break: break-word;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      text-align: left;
+    }
+    th {
+      background-color: #1abc9c;
+    }
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #1abc9c;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--text-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+    .accordion:hover {
+      background-color: #48c9b0;
+    }
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Gobuster Complete Cheatsheet</h1>
+
+    <button class="accordion">⚙️ Basic Usage</button>
+    <div class="panel section">
+      <code>gobuster dir -u http://example.com -w /path/to/wordlist.txt</code>
+      <p>Directory brute forcing on target URL with specified wordlist.</p>
+    </div>
+
+    <button class="accordion">🔍 Modes</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Mode</th><th>Description</th></tr>
+        <tr><td><code>dir</code></td><td>Directory/File brute forcing</td></tr>
+        <tr><td><code>dns</code></td><td>DNS subdomain brute forcing</td></tr>
+        <tr><td><code>vhost</code></td><td>Virtual host brute forcing</td></tr>
+        <tr><td><code>fuzz</code></td><td>Fuzzing using custom patterns</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">⚙️ Common Flags</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Flag</th><th>Description</th></tr>
+        <tr><td><code>-u &lt;url&gt;</code></td><td>Target URL (for dir/vhost/fuzz)</td></tr>
+        <tr><td><code>-w &lt;file&gt;</code></td><td>Wordlist file path</td></tr>
+        <tr><td><code>-t &lt;threads&gt;</code></td><td>Number of concurrent threads (default: 10)</td></tr>
+        <tr><td><code>-x &lt;extensions&gt;</code></td><td>File extensions to append (e.g. php,html)</td></tr>
+        <tr><td><code>-o &lt;file&gt;</code></td><td>Save output to file</td></tr>
+        <tr><td><code>-k</code></td><td>Ignore SSL certificate errors</td></tr>
+        <tr><td><code>-s &lt;status codes&gt;</code></td><td>Show only responses with these HTTP status codes (e.g. 200,204,301)</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">⚙️ Examples</button>
+    <div class="panel section">
+      <ul>
+        <li>Brute force directories:<br><code>gobuster dir -u http://example.com -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</code></li>
+        <li>Brute force subdomains:<br><code>gobuster dns -d example.com -w subdomains.txt</code></li>
+        <li>Brute force vhosts:<br><code>gobuster vhost -u http://example.com -w vhosts.txt</code></li>
+        <li>Scan with multiple extensions:<br><code>gobuster dir -u http://example.com -w wordlist.txt -x php,html,txt</code></li>
+      </ul>
+    </div>
+
+    <button class="accordion">💡 Tips & Tricks</button>
+    <div class="panel section">
+      <ul>
+        <li>Use realistic and updated wordlists for better results.</li>
+        <li>Combine Gobuster with other tools like Nikto and Burp Suite.</li>
+        <li>Adjust thread count for speed/performance tradeoff.</li>
+        <li>Filter results using status codes to remove noise.</li>
+      </ul>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #aaa;">
+      Made with 💚 for Web Recon & Pentesting Enthusiasts
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for(let i=0; i < acc.length; i++){
+      acc[i].addEventListener("click", function(){
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = (panel.style.display === "block") ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

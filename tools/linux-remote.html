@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Linux Cheatsheet - SSH & Remote Access</title>
+  <style>
+    :root {
+      --bg-color: #00331a;
+      --card-color: #004d27;
+      --text-color: #c9f7d9;
+      --accent-color: #00b14f;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    h1 {
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    code {
+      background: #002811;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #a3f7a3;
+      font-size: 0.95em;
+      word-break: break-word;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #006633;
+      text-align: left;
+    }
+    th {
+      background-color: #00b14f;
+      color: #00331a;
+    }
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #00b14f;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--bg-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+    .accordion:hover {
+      background-color: #00d63c;
+    }
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Linux Cheatsheet - SSH & Remote Access</h1>
+
+    <button class="accordion">🔑 ssh</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Command</th><th>Description</th></tr>
+        <tr><td><code>ssh user@host</code></td><td>Connect to remote host via SSH</td></tr>
+        <tr><td><code>ssh -p 2222 user@host</code></td><td>Connect using custom port 2222</td></tr>
+        <tr><td><code>ssh -i ~/.ssh/id_rsa user@host</code></td><td>Use specific private key file</td></tr>
+        <tr><td><code>ssh -v user@host</code></td><td>Verbose mode (debug connection)</td></tr>
+        <tr><td><code>ssh -L 8080:localhost:80 user@host</code></td><td>Local port forwarding (e.g. access remote web server)</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">📁 scp</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Command</th><th>Description</th></tr>
+        <tr><td><code>scp file.txt user@host:/remote/path</code></td><td>Copy local file to remote</td></tr>
+        <tr><td><code>scp user@host:/remote/file.txt ./</code></td><td>Copy remote file to local</td></tr>
+        <tr><td><code>scp -P 2222 file.txt user@host:/path</code></td><td>Specify remote SSH port</td></tr>
+        <tr><td><code>scp -r folder user@host:/remote/</code></td><td>Copy folder recursively</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">📂 sftp</button>
+    <div class="panel section">
+      <p>Interactive SSH file transfer client.</p>
+      <table>
+        <tr><th>Command</th><th>Description</th></tr>
+        <tr><td><code>sftp user@host</code></td><td>Start SFTP session</td></tr>
+        <tr><td><code>put localfile</code></td><td>Upload file</td></tr>
+        <tr><td><code>get remotefile</code></td><td>Download file</td></tr>
+        <tr><td><code>ls</code></td><td>List remote directory</td></tr>
+        <tr><td><code>cd remote_dir</code></td><td>Change remote directory</td></tr>
+        <tr><td><code>exit</code></td><td>Exit SFTP</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">🗝️ ssh-keygen</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Command</th><th>Description</th></tr>
+        <tr><td><code>ssh-keygen -t rsa -b 4096</code></td><td>Generate RSA key pair with 4096 bits</td></tr>
+        <tr><td><code>ssh-keygen -t ed25519</code></td><td>Generate Ed25519 key pair (recommended)</td></tr>
+        <tr><td><code>ssh-copy-id user@host</code></td><td>Copy public key to remote host for passwordless login</td></tr>
+      </table>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #7fc97f;">
+      Page 9 of Linux Cheatsheet — SSH & Remote Access
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for(let i=0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function(){
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = (panel.style.display === "block") ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recon-ng Cheatsheet</title>
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --card-color: #2e2e40;
+      --text-color: #f4f4f4;
+      --accent-color: #4cc9f0;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      color: var(--accent-color);
+      margin-bottom: 10px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .section code {
+      background: #111;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff5a0;
+      font-size: 0.95em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      text-align: left;
+    }
+
+    th {
+      background-color: #39395f;
+    }
+
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #39395f;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--text-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+
+    .accordion:hover {
+      background-color: #4a4a6a;
+    }
+
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Recon-ng Complete Cheatsheet</h1>
+
+    <!-- Sections -->
+
+    <button class="accordion">🚀 Starting Recon-ng</button>
+    <div class="panel section">
+      <code>recon-ng</code> — Start the framework<br />
+      <code>help</code> — Show general help<br />
+      <code>exit</code> — Quit the framework
+    </div>
+
+    <button class="accordion">🗂️ Workspaces</button>
+    <div class="panel section">
+      <code>workspaces</code> — Show workspace commands<br />
+      <code>workspaces add &lt;name&gt;</code> — Create a new workspace<br />
+      <code>workspaces select &lt;name&gt;</code> — Switch to a workspace<br />
+      <code>workspaces delete &lt;name&gt;</code> — Delete a workspace<br />
+      <code>workspaces list</code> — List all workspaces
+    </div>
+
+    <button class="accordion">📦 Modules</button>
+    <div class="panel section">
+      <code>modules search &lt;keyword&gt;</code> — Search modules<br />
+      <code>modules load &lt;module/path&gt;</code> — Load a module<br />
+      <code>show options</code> — View module options<br />
+      <code>set &lt;option&gt; &lt;value&gt;</code> — Set option<br />
+      <code>run</code> — Execute the module
+    </div>
+
+    <button class="accordion">🔍 Useful Module Categories</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Category</th><th>Purpose</th></tr>
+        <tr><td><code>recon/domains-contacts</code></td><td>Email & contact discovery</td></tr>
+        <tr><td><code>recon/domains-hosts</code></td><td>Find subdomains, hosts</td></tr>
+        <tr><td><code>recon/hosts-hosts</code></td><td>Expand hostnames</td></tr>
+        <tr><td><code>recon/hosts-ports</code></td><td>Port scanning modules</td></tr>
+        <tr><td><code>recon/hosts-vulnerabilities</code></td><td>Vulnerability discovery</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">📑 Database Interaction</button>
+    <div class="panel section">
+      <code>show schema</code> — View DB schema<br />
+      <code>show hosts</code>, <code>show domains</code>, <code>show contacts</code><br />
+      <code>delete from &lt;table&gt;</code> — Remove data<br />
+      <code>export csv /path/file.csv</code> — Export data
+    </div>
+
+    <button class="accordion">⚙️ API Keys</button>
+    <div class="panel section">
+      <code>keys list</code> — Show all stored API keys<br />
+      <code>keys add &lt;service&gt; &lt;key&gt;</code> — Add a new API key<br />
+      <code>keys remove &lt;service&gt;</code> — Remove an API key
+    </div>
+
+    <button class="accordion">🛠️ Marketplace</button>
+    <div class="panel section">
+      <code>marketplace search &lt;term&gt;</code> — Search modules<br />
+      <code>marketplace install &lt;name&gt;</code> — Install module<br />
+      <code>marketplace remove &lt;name&gt;</code> — Remove module
+    </div>
+
+    <button class="accordion">📋 Useful Recon-ng Commands</button>
+    <div class="panel section">
+      <code>use &lt;module&gt;</code> — Alias for loading module<br />
+      <code>info</code> — Show info about loaded module<br />
+      <code>clear</code> — Clear screen<br />
+      <code>back</code> — Return to main menu
+    </div>
+
+    <button class="accordion">💡 Sample Recon Workflow</button>
+    <div class="panel section">
+      <code>workspaces add test</code><br />
+      <code>use recon/domains-hosts/bing_domain_web</code><br />
+      <code>set SOURCE example.com</code><br />
+      <code>run</code><br />
+      <code>show hosts</code><br />
+      <code>use recon/hosts-hosts/resolve</code><br />
+      <code>run</code>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #aaa;">
+      Made with ☕ for Recon-ng users
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for (let i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = panel.style.display === "block" ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

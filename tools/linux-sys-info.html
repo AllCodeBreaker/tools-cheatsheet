@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Linux Cheatsheet - System Information</title>
+  <style>
+    :root {
+      --bg-color: #102027;
+      --card-color: #263238;
+      --text-color: #e0f7fa;
+      --accent-color: #00acc1;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    h1 {
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    code {
+      background: #000;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #80cbc4;
+      font-size: 0.95em;
+      word-break: break-word;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      text-align: left;
+    }
+    th {
+      background-color: #007c91;
+    }
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #007c91;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--text-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+    .accordion:hover {
+      background-color: #00acc1;
+    }
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Linux Cheatsheet - System Information</h1>
+
+    <button class="accordion">🖥️ uname</button>
+    <div class="panel section">
+      <p>Displays system information like kernel name, version, and architecture.</p>
+      <table>
+        <tr><th>Option</th><th>Description</th></tr>
+        <tr><td><code>-a</code></td><td>All system info</td></tr>
+        <tr><td><code>-s</code></td><td>Kernel name</td></tr>
+        <tr><td><code>-r</code></td><td>Kernel release</td></tr>
+        <tr><td><code>-m</code></td><td>Machine hardware name</td></tr>
+      </table>
+      <p><strong>Example:</strong> <code>uname -a</code></p>
+      <p><strong>Output:</strong><br/><code>Linux ubuntu 5.15.0-75-generic #82-Ubuntu SMP x86_64 GNU/Linux</code></p>
+    </div>
+
+    <button class="accordion">🧑 hostname</button>
+    <div class="panel section">
+      <p>Shows or sets the system's hostname.</p>
+      <table>
+        <tr><th>Option</th><th>Description</th></tr>
+        <tr><td><em>(none)</em></td><td>Print current hostname</td></tr>
+        <tr><td><code>-f</code></td><td>Fully qualified domain name</td></tr>
+        <tr><td><code>-i</code></td><td>IP address</td></tr>
+      </table>
+      <p><strong>Example:</strong> <code>hostname -f</code></p>
+      <p><strong>Output:</strong><br/><code>myhost.localdomain</code></p>
+    </div>
+
+    <button class="accordion">⏱️ uptime</button>
+    <div class="panel section">
+      <p>Displays how long the system has been running.</p>
+      <p><strong>Example:</strong> <code>uptime</code></p>
+      <p><strong>Output:</strong><br/><code>14:33:02 up 2 days, 3:10, 3 users, load average: 0.25, 0.40, 0.35</code></p>
+    </div>
+
+    <button class="accordion">👤 whoami</button>
+    <div class="panel section">
+      <p>Prints the current logged-in username.</p>
+      <p><strong>Example:</strong> <code>whoami</code></p>
+      <p><strong>Output:</strong><br/><code>john</code></p>
+    </div>
+
+    <button class="accordion">🆔 id</button>
+    <div class="panel section">
+      <p>Displays user ID (UID), group ID (GID), and group memberships.</p>
+      <p><strong>Example:</strong> <code>id</code></p>
+      <p><strong>Output:</strong><br/><code>uid=1000(john) gid=1000(john) groups=1000(john),27(sudo)</code></p>
+    </div>
+
+    <button class="accordion">📊 top</button>
+    <div class="panel section">
+      <p>Interactive real-time view of running processes and system resource usage.</p>
+      <p><strong>Example:</strong> <code>top</code></p>
+      <p><strong>Tip:</strong> Press <code>q</code> to quit.</p>
+    </div>
+
+    <button class="accordion">📈 free</button>
+    <div class="panel section">
+      <p>Shows memory usage statistics.</p>
+      <table>
+        <tr><th>Option</th><th>Description</th></tr>
+        <tr><td><code>-h</code></td><td>Human-readable format (MB, GB)</td></tr>
+        <tr><td><code>-t</code></td><td>Show total memory usage</td></tr>
+      </table>
+      <p><strong>Example:</strong> <code>free -h</code></p>
+      <p><strong>Output:</strong><br/><code>Mem: 7.8Gi used 1.2Gi free 6.6Gi</code></p>
+    </div>
+
+    <button class="accordion">💽 df</button>
+    <div class="panel section">
+      <p>Shows disk space usage of mounted filesystems.</p>
+      <table>
+        <tr><th>Option</th><th>Description</th></tr>
+        <tr><td><code>-h</code></td><td>Human-readable format</td></tr>
+        <tr><td><code>-T</code></td><td>Show filesystem types</td></tr>
+      </table>
+      <p><strong>Example:</strong> <code>df -h</code></p>
+    </div>
+
+    <button class="accordion">📁 du</button>
+    <div class="panel section">
+      <p>Shows size of directories and their contents.</p>
+      <table>
+        <tr><th>Option</th><th>Description</th></tr>
+        <tr><td><code>-sh</code></td><td>Summarize total size in human-readable format</td></tr>
+        <tr><td><code>-a</code></td><td>Show size of all files</td></tr>
+      </table>
+      <p><strong>Example:</strong> <code>du -sh *</code></p>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #ccc;">
+      Page 1 of Linux Cheatsheet — System Information Only
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for(let i=0; i < acc.length; i++){
+      acc[i].addEventListener("click", function(){
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = (panel.style.display === "block") ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

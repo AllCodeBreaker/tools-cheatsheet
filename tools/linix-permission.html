@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Linux Cheatsheet - Permissions & Ownership</title>
+  <style>
+    :root {
+      --bg-color: #2b2600;
+      --card-color: #3a3600;
+      --text-color: #fff9c4;
+      --accent-color: #fbc02d;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    h1 {
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    code {
+      background: #000;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff176;
+      font-size: 0.95em;
+      word-break: break-word;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #666;
+      text-align: left;
+    }
+    th {
+      background-color: #fbc02d;
+    }
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #fbc02d;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: #000;
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+    .accordion:hover {
+      background-color: #ffeb3b;
+    }
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Linux Cheatsheet - Permissions & Ownership</h1>
+
+    <button class="accordion">🔐 chmod</button>
+    <div class="panel section">
+      <p>Change file or directory permissions.</p>
+      <table>
+        <tr><th>Example</th><th>Description</th></tr>
+        <tr><td><code>chmod 755 file</code></td><td>Owner=rwx, Group=rx, Others=rx</td></tr>
+        <tr><td><code>chmod u+x script.sh</code></td><td>Add execute permission to user</td></tr>
+        <tr><td><code>chmod -R 644 *</code></td><td>Recursive change: read/write user, read others</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">👑 chown</button>
+    <div class="panel section">
+      <p>Change file ownership (user and group).</p>
+      <p><strong>Syntax:</strong> <code>chown [user][:group] file</code></p>
+      <p><strong>Examples:</strong><br>
+        <code>chown alice file.txt</code><br>
+        <code>chown bob:dev file.txt</code><br>
+        <code>chown -R root:root /opt</code>
+      </p>
+    </div>
+
+    <button class="accordion">👥 chgrp</button>
+    <div class="panel section">
+      <p>Change the group of a file/directory.</p>
+      <p><strong>Example:</strong> <code>chgrp staff report.doc</code></p>
+    </div>
+
+    <button class="accordion">📉 umask</button>
+    <div class="panel section">
+      <p>Sets default permissions for new files.</p>
+      <p><strong>Example:</strong> <code>umask 022</code> → new files: 644, dirs: 755</p>
+    </div>
+
+    <button class="accordion">📄 stat</button>
+    <div class="panel section">
+      <p>Show file details, including permissions, owner, and timestamps.</p>
+      <p><strong>Example:</strong> <code>stat file.txt</code></p>
+      <p><strong>Output:</strong><br><code>
+File: file.txt<br>
+Size: 18         Blocks: 8          IO Block: 4096   regular file<br>
+Access: 2025-08-19 13:42:00.000000000 +0000<br>
+Modify: 2025-08-19 13:42:00.000000000 +0000<br>
+Change: 2025-08-19 13:42:00.000000000 +0000<br>
+</code></p>
+    </div>
+
+    <button class="accordion">📋 Numeric Permission Reference</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Number</th><th>Permission</th></tr>
+        <tr><td>7</td><td>rwx</td></tr>
+        <tr><td>6</td><td>rw-</td></tr>
+        <tr><td>5</td><td>r-x</td></tr>
+        <tr><td>4</td><td>r--</td></tr>
+        <tr><td>2</td><td>-w-</td></tr>
+        <tr><td>1</td><td>--x</td></tr>
+        <tr><td>0</td><td>---</td></tr>
+      </table>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #ccc;">
+      Page 6 of Linux Cheatsheet — Permissions & Ownership
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for (let i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = (panel.style.display === "block") ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

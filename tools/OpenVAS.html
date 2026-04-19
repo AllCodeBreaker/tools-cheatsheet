@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OpenVAS Cheatsheet</title>
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --card-color: #2e2e40;
+      --text-color: #f4f4f4;
+      --accent-color: #27ae60;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    h1 {
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    code {
+      background: #111;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff5a0;
+      font-size: 0.95em;
+      word-break: break-word;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      text-align: left;
+    }
+    th {
+      background-color: #1e8449;
+    }
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #1e8449;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--text-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+    .accordion:hover {
+      background-color: #27ae60;
+    }
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>OpenVAS Cheatsheet</h1>
+
+    <button class="accordion">⚙️ Overview</button>
+    <div class="panel section">
+      <ul>
+        <li>OpenVAS is an open-source vulnerability scanner.</li>
+        <li>Includes a regularly updated feed of Network Vulnerability Tests (NVTs).</li>
+        <li>Used for vulnerability assessment and management.</li>
+        <li>Comprises several components including scanner, manager, and web interface.</li>
+      </ul>
+    </div>
+
+    <button class="accordion">🔍 Basic Commands</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Command</th><th>Description</th></tr>
+        <tr><td><code>openvas-setup</code></td><td>Install and setup OpenVAS (deprecated in newer versions)</td></tr>
+        <tr><td><code>greenbone-nvt-sync</code></td><td>Synchronize vulnerability tests</td></tr>
+        <tr><td><code>openvas-start</code></td><td>Start OpenVAS services (older)</td></tr>
+        <tr><td><code>gvm-manage-certs -a</code></td><td>Generate SSL certificates</td></tr>
+        <tr><td><code>gvm-cli</code></td><td>Command line interface to interact with OpenVAS/GVM</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">⚙️ Using Greenbone Vulnerability Manager (GVM)</button>
+    <div class="panel section">
+      <ul>
+        <li>Manage targets, tasks, and reports via <code>gvmd</code> or web UI (<code>GSA</code>).</li>
+        <li>Scan configuration includes target hosts and scan settings.</li>
+        <li>Run scans and generate reports via the web interface or CLI.</li>
+        <li>Update NVT feeds regularly for accurate detection.</li>
+      </ul>
+    </div>
+
+    <button class="accordion">💡 Tips & Best Practices</button>
+    <div class="panel section">
+      <ul>
+        <li>Run <code>greenbone-nvt-sync</code> frequently to keep plugins updated.</li>
+        <li>Scan in segments to avoid network overload.</li>
+        <li>Use credentialed scans for deeper vulnerability assessment.</li>
+        <li>Export reports in PDF, XML, or CSV for analysis.</li>
+        <li>Regularly backup OpenVAS/GVM data and configs.</li>
+      </ul>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #aaa;">
+      Made with 🍃 for Open Source Security Enthusiasts
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for(let i=0; i < acc.length; i++){
+      acc[i].addEventListener("click", function(){
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = (panel.style.display === "block") ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

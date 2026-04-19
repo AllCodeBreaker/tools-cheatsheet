@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Java Package Documentation - javax.servlet</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 20px;
+    line-height: 1.6;
+  }
+  h1, h2, h3, h4 {
+    color: #2a4d69;
+  }
+  pre {
+    background-color: #eaeaea;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+    overflow-x: auto;
+  }
+  code {
+    font-family: "Courier New", monospace;
+  }
+  a {
+    color: #1a73e8;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  nav {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #dde6f0;
+    border-radius: 6px;
+  }
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  ul li {
+    margin: 5px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1 id="top">Java Package Documentation: <code>javax.servlet</code></h1>
+
+<nav>
+  <h2>Table of Contents</h2>
+  <ul>
+    <li><a href="#classes">Classes and Interfaces</a>
+      <ul>
+        <li><a href="#class-Servlet">Servlet (Interface)</a></li>
+        <li><a href="#class-GenericServlet">GenericServlet (Abstract Class)</a></li>
+        <li><a href="#class-ServletRequest">ServletRequest (Interface)</a></li>
+        <li><a href="#class-ServletResponse">ServletResponse (Interface)</a></li>
+        <li><a href="#class-ServletConfig">ServletConfig (Interface)</a></li>
+        <li><a href="#class-ServletContext">ServletContext (Interface)</a></li>
+        <li><a href="#class-ServletException">ServletException (Class)</a></li>
+        <li><a href="#class-ServletInputStream">ServletInputStream (Abstract Class)</a></li>
+        <li><a href="#class-ServletOutputStream">ServletOutputStream (Abstract Class)</a></li>
+        <li><a href="#class-SingleThreadModel">SingleThreadModel (Interface, Deprecated)</a></li>
+        <li><a href="#class-RequestDispatcher">RequestDispatcher (Interface)</a></li>
+        <li><a href="#class-AsyncContext">AsyncContext (Class)</a></li>
+        <li><a href="#class-ReadListener">ReadListener (Interface)</a></li>
+        <li><a href="#class-WriteListener">WriteListener (Interface)</a></li>
+      </ul>
+    </li>
+    <li><a href="#functions">Standalone Functions</a> (None in this package)</li>
+    <li><a href="#constants">Constants / Enums / Config Values</a></li>
+  </ul>
+</nav>
+
+<hr />
+
+<h2 id="classes">Classes and Interfaces</h2>
+
+<section id="class-Servlet">
+  <h3>Servlet (Interface)</h3>
+  <p><strong>Purpose / Use:</strong> Defines the lifecycle methods a servlet must implement. Base interface for all servlets.</p>
+  
+  <h4>Constructors</h4>
+  <p>Interfaces do not have constructors.</p>
+
+  <h4>Public Methods</h4>
+  <pre><code>
+void init(ServletConfig config) throws ServletException
+void service(ServletRequest req, ServletResponse res) throws ServletException, IOException
+void destroy()
+ServletConfig getServletConfig()
+String getServletInfo()
+  </code></pre>
+  <p><strong>Description:</strong></p>
+  <ul>
+    <li><code>init(ServletConfig)</code>: Initializes the servlet once at startup.</li>
+    <li><code>service(ServletRequest, ServletResponse)</code>: Handles client requests.</li>
+    <li><code>destroy()</code>: Called before the servlet is removed from service.</li>
+    <li><code>getServletConfig()</code>: Returns the servlet configuration object.</li>
+    <li><code>getServletInfo()</code>: Returns servlet information like version or author.</li>
+  </ul>
+</section>
+
+<section id="class-GenericServlet">
+  <h3>GenericServlet (Abstract Class)</h3>
+  <p><strong>Purpose / Use:</strong> Abstract base class implementing the <code>Servlet</code> interface with default lifecycle methods except for <code>service()</code>, which is abstract.</p>
+
+  <h4>Constructors</h4>
+  <pre><code>
+GenericServlet()
+  </code></pre>
+  <p>Default constructor initializes the servlet.</p>
+
+  <h4>Public Methods</h4>
+  <pre><code>
+void init(ServletConfig config) throws ServletException
+ServletConfig getServletConfig()
+abstract void service(ServletRequest req, ServletResponse res) throws ServletException, IOException
+String getServletInfo()
+void destroy()
+  </code></pre>
+  <p><strong>Description:</strong> Provides default implementations for <code>init</code>, <code>getServletConfig</code>, <code>getServletInfo</code>, and <code>destroy</code>. Subclasses must implement <code>service()</code> for request handling.</p>
+</section>
+
+<section id="class-ServletRequest">
+  <h3>ServletRequest (Interface)</h3>
+  <p><strong>Purpose / Use:</strong> Provides client request information to a servlet, including parameters, attributes, input streams, and more.</p>
+  
+  <h4>Constructors</h4>
+  <p>Interfaces do not have constructors.</p>
+
+  <h4>Public Methods</h4>
+  <pre><code>
+String getParameter(String name)
+Enumeration<String> getParameterNames()
+String[] getParameterValues(String name)
+Map<String,String[]> getParameterMap()
+String getProtocol()
+String getScheme()
+String getServerName()
+int getServerPort()
+BufferedReader getReader() throws IOException
+InputStream getInputStream() throws IOException
+String getRemoteAddr()
+String getRemoteHost()
+Locale getLocale()
+Enumeration<Locale> getLocales()
+boolean isSecure()
+RequestDispatcher getRequestDispatcher(String path)
+Object getAttribute(String name)
+Enumeration<String> getAttributeNames()
+void setAttribute(String name, Object o)
+void removeAttribute(String name)
+String getCharacterEncoding()
+void setCharacterEncoding(String env) throws UnsupportedEncodingException
+int getContentLength()
+long getContentLengthLong()
+String getContentType()
+  </code></pre>
+</section>
+
+<section id="class-ServletResponse">
+  <h3>ServletResponse (Interface)</h3>
+  <p><strong>Purpose / Use:</strong> Assists a servlet in sending a response to the client, including setting content type, length, and output streams.</p>
+
+  <h4>Constructors</h4>
+  <p>Interfaces do not have constructors.</p>
+
+  <h4>Public Methods</h4>
+  <pre><code>
+String getCharacterEncoding()
+String getContentType()
+ServletOutputStream getOutputStream() throws IOException
+PrintWriter getWriter() throws IOException
+void setCharacterEncoding(String charset)
+void setContentLength(int len)
+void setContentLengthLong(long len)
+void setContentType(String type)
+void setBufferSize(int size)
+int getBufferSize()
+void flushBuffer() throws IOException
+void resetBuffer()
+boolean isCommitted()
+void reset()
+Locale getLocale()
+void setLocale(Locale loc)
+  </code></pre>
+</section>
+
+<section id="class-ServletConfig">
+  <h3>ServletConfig (Interface)</h3>
+  <p><strong>Purpose / Use:</strong> Provides servlet configuration information to a servlet instance, including init parameters and context.</p>
+
+  <h4>Constructors</h4>
+  <p>Interfaces do not have constructors.</p>
+
+  <h4>Public Methods</h4>
+  <pre><code>
+String getInitParameter(String name)
+Enumeration<String> getInitParameterNames()
+ServletContext getServletContext()
+String getServletName()
+  </code></pre>
+</section>
+
+<section id="class-ServletContext">
+  <h3>ServletContext (Interface)</h3>
+  <p><strong>Purpose / Use:</strong> Represents the servlet’s view of the web application context. Allows access to resources, attributes, initialization parameters, and logging.</p>
+
+  <h4>Constructors</h4>
+  <p>Interfaces do not have constructors.</p>
+
+  <h4>Public Methods</h4>
+  <pre><code>
+String getContextPath()
+ServletContext getContext(String uripath)
+int getMajorVersion()
+int getMinorVersion()
+int getEffectiveMajorVersion()
+int getEffectiveMinorVersion()
+String getMimeType(String file)
+Set<String> getResourcePaths(String path)
+URL getResource(String path) throws MalformedURLException
+InputStream getResourceAsStream(String path)
+RequestDispatcher getRequestDispatcher(String path)
+RequestDispatcher getNamedDispatcher(String name)
+Servlet getServlet(String name) throws ServletException
+Enumeration<Servlet> getServlets()
+Enumeration<String> getServletNames()
+void log(String msg)
+void log(Exception exception, String msg)
+void log(String message, Throwable throwable)
+String getRealPath(String path)
+String getServerInfo()
+String getInitParameter(String name)
+Enumeration<String> getInitParameterNames()
+boolean setInitParameter(String name, String value)
+Object getAttribute(String name)
+Enumeration<String> getAttributeNames()
+void setAttribute(String name, Object object)
+void removeAttribute(String name)
+ServletRegistration.Dynamic addServlet(String servletName, String className)
+ServletRegistration.Dynamic addServlet(String servletName, Servlet servlet)
+ServletRegistration.Dynamic addServlet(String servletName, Class<? extends Servlet> servletClass)
+  </code></pre>
+</section>
+
+<section id="class-ServletException">
+  <h3>ServletException (Class)</h3>
+  <p><strong>Purpose / Use:</strong> Exception a servlet throws to indicate errors during processing.</p>
+
+  <h4>Constructors</h4>
+  <pre><code>
+ServletException()
+ServletException(String message)
+ServletException(String message, Throwable rootCause)
+ServletException(Throwable rootCause)
+  </code></pre>
+
+  <h4>Public Methods</h4>
+  <p>Inherited from <code>java.lang.Exception</code></p>
+</section>
+
+<section id="class-ServletInputStream">
+  <h3>ServletInputStream (Abstract Class)</h3>
+  <p><strong>Purpose / Use:</strong> Provides an input stream for reading binary data from a client request.</p>
+
+  <h4>Constructors</h4>
+  <pre><code>
+protected ServletInputStream()
+  </code></pre>
+
+  <h4>Public Methods</h4>
+  <pre><code>
+int read() throws IOException
+boolean isFinished()
+boolean isReady()
+void setReadListener(ReadListener listener)
+  </code></pre>
+</section>
+
+<section id="class-ServletOutputStream">
+  <h3>ServletOutputStream (Abstract Class)</h3>
+  <p><strong>Purpose / Use:</strong> Provides an output stream for sending binary data to a client response.</p>
+
+  <h4>Constructors</h4>
+  <pre><code>
+protected ServletOutputStream()
+  </code></pre>
+
+  <h4>Public Methods</h4>
+  <pre><code>
+void write(int b) throws IOException
+boolean isReady()
+void setWriteListener(WriteListener listener)
+  </code></pre>
+</section>
+
+<section id="class-SingleThreadModel">
+  <h3>SingleThreadModel (Interface) <em>(Deprecated)</em></h3>
+  <p><strong>Purpose / Use:</strong> Marker interface to indicate servlet container must serialize requests to ensure thread safety. Deprecated because it causes performance bottlenecks.</p>
+
+  <h4>Constructors</h4>
+  <p>Interfaces do not have constructors.</p>
+</section>
+
+<section id="class-RequestDispatcher">
+  <h3>RequestDispatcher (Interface)</h3>
+  <p><strong>Purpose / Use:</strong> Provides the ability to forward requests to other resources (servlets, JSPs) or include content.</p>
+
+  <h4>Constructors</h4>
+  <p>Interfaces do not have constructors.</p>
+
+  <h4>Public Methods</h4>
+  <pre><code>
+void forward(ServletRequest request, ServletResponse response) throws ServletException, IOException
+void include(ServletRequest request, ServletResponse response) throws ServletException, IOException
+  </code></pre>
+</section>
+
+<section id="class-AsyncContext">
+  <h3>AsyncContext (Class)</h3>
+  <p><strong>Purpose / Use:</strong> Supports asynchronous processing in servlets, allowing the servlet to exit while the container continues processing the request.</p>
+
+  <h4>Constructors</h4>
+  <p>Instances are created by the container; no public constructors.</p>
+
+  <h4>Public Methods</h4>
+  <pre><code>
+ServletRequest getRequest()
+ServletResponse getResponse()
+boolean hasOriginalRequestAndResponse()
+void dispatch()
+void dispatch(String path)
+void dispatch(ServletContext context, String path)
+void complete()
+void start(Runnable run)
+void addListener(AsyncListener listener)
+void addListener(AsyncListener listener, ServletRequest request, ServletResponse response)
+<T extends AsyncListener> T createListener(Class<T> clazz) throws ServletException
+void setTimeout(long timeout)
+long getTimeout()
+  </code></pre>
+</section>
+
+<section id="class-ReadListener">
+  <h3>ReadListener (Interface)</h3>
+  <p><strong>Purpose / Use:</strong> Receives notification events about non-blocking reads from a <code>ServletInputStream</code>.</p>
+
+  <h4>Public Methods</h4>
+  <pre><code>
+void onDataAvailable() throws IOException
+void onAllDataRead() throws IOException
+void onError(Throwable t)
+  </code></pre>
+</section>
+
+<section id="class-WriteListener">
+  <h3>WriteListener (Interface)</h3>
+  <p><strong>Purpose / Use:</strong> Receives notification events about non-blocking writes to a <code>ServletOutputStream</code>.</p>
+
+  <h4>Public Methods</h4>
+  <pre><code>
+void onWritePossible() throws IOException
+void onError(Throwable t)
+  </code></pre>
+</section>
+
+<hr />
+
+<h2 id="functions">Functions Outside Classes</h2>
+<p><em>Note: The <code>javax.servlet</code> package defines interfaces and classes only. There are no standalone functions outside classes.</em></p>
+
+<hr />
+
+<h2 id="constants">Constants / Enums / Config Values</h2>
+
+<p>The <code>javax.servlet</code> package itself does not define global constants or enums outside of classes/interfaces, but some interfaces define constants. For example:</p>
+
+<ul>
+  <li><code>ServletContext</code> defines initialization parameter names.</li>
+  <li><code>HttpServletResponse</code> (in <code>javax.servlet.http</code>) defines status code constants.</li>
+</ul>
+
+<p>For exact constants, refer to subclasses or extended packages such as <code>javax.servlet.http</code>.</p>
+
+<hr />
+<footer>
+  <p>Documentation generated for <strong>Java Package javax.servlet</strong>.</p>
+</footer>
+
+</body>
+</html>

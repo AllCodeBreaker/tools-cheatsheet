@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>theHarvester Cheatsheet</title>
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --card-color: #2e2e40;
+      --text-color: #f4f4f4;
+      --accent-color: #4cc9f0;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    h1 {
+      color: var(--accent-color);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .section code {
+      background: #111;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff5a0;
+      font-size: 0.95em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      text-align: left;
+    }
+
+    th {
+      background-color: #39395f;
+    }
+
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #39395f;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--text-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+
+    .accordion:hover {
+      background-color: #4a4a6a;
+    }
+
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>theHarvester Complete Cheatsheet</h1>
+
+    <button class="accordion">🚀 Basic Syntax</button>
+    <div class="panel section">
+      <code>theHarvester -d &lt;domain&gt; -b &lt;source&gt; [options]</code><br><br>
+      Example:<br>
+      <code>theHarvester -d example.com -b google</code>
+    </div>
+
+    <button class="accordion">🌐 Supported Data Sources</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Source</th><th>Description</th></tr>
+        <tr><td><code>google</code></td><td>Google Search</td></tr>
+        <tr><td><code>bing</code></td><td>Bing Search</td></tr>
+        <tr><td><code>crtsh</code></td><td>Certificate Transparency Logs</td></tr>
+        <tr><td><code>linkedin</code></td><td>LinkedIn (with API)</td></tr>
+        <tr><td><code>github</code></td><td>GitHub User Discovery</td></tr>
+        <tr><td><code>hunter</code></td><td>Hunter.io (API key required)</td></tr>
+        <tr><td><code>shodan</code></td><td>Host Enumeration (API key)</td></tr>
+        <tr><td><code>anubis</code></td><td>Subdomain enumeration</td></tr>
+        <tr><td><code>all</code></td><td>Use all available sources</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">🛠️ Common Options</button>
+    <div class="panel section">
+      <code>-d &lt;domain&gt;</code> — Target domain<br />
+      <code>-b &lt;source&gt;</code> — Data source to use<br />
+      <code>-l &lt;limit&gt;</code> — Limit number of results<br />
+      <code>-s &lt;start&gt;</code> — Result start number (pagination)<br />
+      <code>-f</code> — Save output to HTML and XML<br />
+      <code>-v</code> — Verbose output<br />
+      <code>-h</code> — Show help menu
+    </div>
+
+    <button class="accordion">📦 Output Options</button>
+    <div class="panel section">
+      <code>-f &lt;filename&gt;</code> — Export to HTML and XML<br />
+      Output files: <code>filename.xml</code>, <code>filename.html</code><br />
+      Supports CLI parsing or browser review
+    </div>
+
+    <button class="accordion">🔑 API Key Configuration</button>
+    <div class="panel section">
+      Edit API keys in:<br>
+      <code>theHarvester/api-keys.yaml</code><br /><br>
+      Example format:<br>
+      <pre style="background:#111; color:#fff; padding:10px; border-radius:4px;">
+shodan:
+  api_key: YOUR_KEY_HERE
+
+hunter:
+  api_key: YOUR_KEY_HERE
+      </pre>
+    </div>
+
+    <button class="accordion">💡 Example Use Cases</button>
+    <div class="panel section">
+      🔎 **Search domain using Google**:<br />
+      <code>theHarvester -d example.com -b google</code><br /><br />
+      📦 **Run all sources, limit results, export to HTML**:<br />
+      <code>theHarvester -d example.com -b all -l 100 -f output</code><br /><br />
+      🔐 **Use with API services (Shodan, Hunter.io)**:<br />
+      <code>theHarvester -d example.com -b shodan</code><br />
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #aaa;">
+      Made with ☕ for OSINT lovers
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for (let i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = panel.style.display === "block" ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

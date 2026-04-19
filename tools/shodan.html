@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shodan Cheatsheet</title>
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --card-color: #2e2e40;
+      --text-color: #f4f4f4;
+      --accent-color: #ff5722;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    h1 {
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .section code {
+      background: #111;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff5a0;
+      font-size: 0.95em;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      text-align: left;
+    }
+    th {
+      background-color: #e64a19;
+    }
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #e64a19;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--text-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+    .accordion:hover {
+      background-color: #ff7043;
+    }
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Shodan Complete Cheatsheet</h1>
+
+    <button class="accordion">🚀 Getting Started</button>
+    <div class="panel section">
+      <ul>
+        <li>Sign up at <a href="https://www.shodan.io" target="_blank" style="color: var(--accent-color);">shodan.io</a> for API key</li>
+        <li>Install CLI: <code>pip install shodan</code></li>
+        <li>Initialize CLI with API key: <code>shodan init YOUR_API_KEY</code></li>
+      </ul>
+    </div>
+
+    <button class="accordion">🔍 Basic Commands</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Command</th><th>Description</th></tr>
+        <tr><td><code>shodan search "apache"</code></td><td>Search devices running Apache</td></tr>
+        <tr><td><code>shodan host 8.8.8.8</code></td><td>Get info about an IP address</td></tr>
+        <tr><td><code>shodan scan submit 1.2.3.4/24</code></td><td>Start a scan on subnet</td></tr>
+        <tr><td><code>shodan stats apache</code></td><td>Get stats on query</td></tr>
+        <tr><td><code>shodan info</code></td><td>Show account information</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">📡 Filters & Query Syntax</button>
+    <div class="panel section">
+      <ul>
+        <li><code>port:</code> Search by port number (e.g. <code>port:22</code>)</li>
+        <li><code>org:</code> Search by organization (e.g. <code>org:"Google LLC"</code>)</li>
+        <li><code>country:</code> Filter by country (e.g. <code>country:US</code>)</li>
+        <li><code>hostname:</code> Search by hostname</li>
+        <li><code>before/after:</code> Search by date (e.g. <code>before:2024-01-01</code>)</li>
+        <li>Combine filters for precise results (e.g. <code>apache port:80 country:US</code>)</li>
+      </ul>
+    </div>
+
+    <button class="accordion">⚙️ API Usage (Python Example)</button>
+    <div class="panel section">
+      <pre style="background:#111; padding:10px; border-radius:6px; color:#fff5a0;">
+import shodan
+
+API_KEY = "YOUR_API_KEY"
+api = shodan.Shodan(API_KEY)
+
+try:
+    results = api.search('apache')
+    print(f"Results found: {results['total']}")
+    for result in results['matches'][:5]:
+        print(result['ip_str'])
+except shodan.APIError as e:
+    print(f"Error: {e}")
+      </pre>
+    </div>
+
+    <button class="accordion">🛠️ Use Cases</button>
+    <div class="panel section">
+      <ul>
+        <li>Identify vulnerable devices and services</li>
+        <li>Discover exposed IoT devices</li>
+        <li>Asset discovery and network mapping</li>
+        <li>Security research and penetration testing</li>
+        <li>Monitor your own organization’s exposure</li>
+      </ul>
+    </div>
+
+    <button class="accordion">⌨️ Keyboard & CLI Tips</button>
+    <div class="panel section">
+      <ul>
+        <li>Use quotes to search multiple words: <code>"apache httpd"</code></li>
+        <li>Use <code>shodan download</code> to get bulk data</li>
+        <li>Filter results with <code>grep</code> or similar tools</li>
+        <li>Use <code>shodan alert</code> to create alerts on new devices</li>
+      </ul>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #aaa;">
+      Made with 🔥 for Cybersecurity Professionals & Researchers
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for(let i=0; i < acc.length; i++){
+      acc[i].addEventListener("click", function(){
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = (panel.style.display === "block") ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>
