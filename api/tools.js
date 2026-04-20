@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 export default function handler(req, res){
-    const toolsDir = path.join(process.cwd(), "tools")
+    const toolsDir = path.join(process.cwd(), "public","tools")
     
     try{
         const files = fs.readdirSync(toolsDir);
