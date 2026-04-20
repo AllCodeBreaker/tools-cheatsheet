@@ -1,7 +1,8 @@
 {
-    "routes": [
-        {
-            "src": "tools/(.*)", "dest": "/tools/$1"
-        }
-    ]
+  "routes": [
+    { "src": "/api/tools", "dest": "/api/tools.js" },
+    { "src": "/api/tool", "dest": "/api/tool.js" },
+    { "src": "/tools/(.*)", "dest": "/api/tool.js?name=$1" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
 }
