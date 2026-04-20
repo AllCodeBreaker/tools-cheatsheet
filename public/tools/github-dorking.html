@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GitHub Dorking Cheatsheet</title>
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --card-color: #2e2e40;
+      --text-color: #f4f4f4;
+      --accent-color: #6e5494;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    h1 {
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .section code {
+      background: #111;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff5a0;
+      font-size: 0.95em;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      text-align: left;
+    }
+    th {
+      background-color: #5b3b8b;
+    }
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #5b3b8b;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--text-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+    .accordion:hover {
+      background-color: #7a59b5;
+    }
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>GitHub Dorking Complete Cheatsheet</h1>
+
+    <button class="accordion">🔎 What is GitHub Dorking?</button>
+    <div class="panel section">
+      <p>GitHub Dorking is the art of using advanced search queries on GitHub to find sensitive data such as API keys, passwords, tokens, and private info leaked in public repos.</p>
+    </div>
+
+    <button class="accordion">⚙️ Basic Search Syntax</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Query</th><th>Meaning</th></tr>
+        <tr><td><code>filename:.env</code></td><td>Find files named <code>.env</code></td></tr>
+        <tr><td><code>extension:env</code></td><td>Find files with <code>.env</code> extension</td></tr>
+        <tr><td><code>user:username</code></td><td>Search inside repos by specific user</td></tr>
+        <tr><td><code>org:organization</code></td><td>Search inside organization repos</td></tr>
+        <tr><td><code>path:/config</code></td><td>Search files inside config folders</td></tr>
+        <tr><td><code>language:python</code></td><td>Search repos using Python</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">🗝️ Common Sensitive Keywords</button>
+    <div class="panel section">
+      <ul>
+        <li>password</li>
+        <li>apikey</li>
+        <li>secret</li>
+        <li>token</li>
+        <li>passwd</li>
+        <li>ssh_key</li>
+        <li>aws_access_key_id</li>
+      </ul>
+    </div>
+
+    <button class="accordion">🔧 Sample Dorks</button>
+    <div class="panel section">
+      <ul>
+        <li><code>filename:id_rsa</code> — Find private SSH keys</li>
+        <li><code>extension:json password</code> — Find JSON files containing “password”</li>
+        <li><code>aws_access_key_id filename:.env</code> — Find AWS keys in env files</li>
+        <li><code>password in:file language:python</code> — Search password in Python files</li>
+        <li><code>path:/config token</code> — Tokens inside config directories</li>
+      </ul>
+    </div>
+
+    <button class="accordion">📋 Tips & Best Practices</button>
+    <div class="panel section">
+      <ul>
+        <li>Use quotes to search exact phrases: <code>"API_KEY"</code></li>
+        <li>Combine keywords and filters for precise results</li>
+        <li>Respect legal and ethical guidelines — only search public repos</li>
+        <li>Use GitHub’s advanced search page for GUI assistance</li>
+      </ul>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #aaa;">
+      Made with 💜 for Security Researchers & Bug Bounty Hunters
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for(let i=0; i < acc.length; i++){
+      acc[i].addEventListener("click", function(){
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = (panel.style.display === "block") ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

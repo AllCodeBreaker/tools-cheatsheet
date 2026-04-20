@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dirbuster Cheatsheet</title>
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --card-color: #2e2e40;
+      --text-color: #f4f4f4;
+      --accent-color: #d35400;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    h1 {
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    code {
+      background: #111;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff5a0;
+      font-size: 0.95em;
+      word-break: break-word;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      text-align: left;
+    }
+    th {
+      background-color: #ba4a00;
+    }
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #ba4a00;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--text-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+    .accordion:hover {
+      background-color: var(--accent-color);
+    }
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Dirbuster Cheatsheet</h1>
+
+    <button class="accordion">⚙️ Overview</button>
+    <div class="panel section">
+      <ul>
+        <li>DirBuster is a multi-threaded web application directory and file brute-forcer.</li>
+        <li>Used to discover hidden web directories and files.</li>
+        <li>Uses wordlists to guess directory and file names.</li>
+      </ul>
+    </div>
+
+    <button class="accordion">🚀 Basic Usage</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Action</th><th>Description</th></tr>
+        <tr><td>Start DirBuster GUI</td><td>Run <code>dirbuster</code> in terminal</td></tr>
+        <tr><td>Set Target URL</td><td>Enter the base URL to scan</td></tr>
+        <tr><td>Select Wordlist</td><td>Choose wordlist from built-in or custom list</td></tr>
+        <tr><td>Set Number of Threads</td><td>Control speed by adjusting threads</td></tr>
+        <tr><td>Start Scan</td><td>Begin brute forcing directories/files</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">🔍 CLI Options (DirBuster Pro)</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Command</th><th>Description</th></tr>
+        <tr><td><code>dirbuster -u http://target/ -l wordlist.txt -t 50</code></td><td>Scan URL with wordlist and 50 threads</td></tr>
+        <tr><td><code>dirbuster -u http://target/ -e php,html,txt</code></td><td>Set file extensions to search for</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">💡 Tips & Best Practices</button>
+    <div class="panel section">
+      <ul>
+        <li>Use large, relevant wordlists for better coverage.</li>
+        <li>Adjust thread count to avoid overwhelming the target.</li>
+        <li>Combine with proxy tools like Burp Suite for analysis.</li>
+        <li>Filter out common HTTP error codes in results.</li>
+        <li>Respect legal boundaries and get permission before scanning.</li>
+      </ul>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #aaa;">
+      Made with 🧰 for Web Application Testers
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for(let i=0; i < acc.length; i++){
+      acc[i].addEventListener("click", function(){
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = (panel.style.display === "block") ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

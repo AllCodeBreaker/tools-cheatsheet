@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nmap Cheatsheet</title>
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --card-color: #2e2e40;
+      --text-color: #f4f4f4;
+      --accent-color: #4cc9f0;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      color: var(--accent-color);
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .section code {
+      background: #111;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff5a0;
+      font-size: 0.95em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      text-align: left;
+    }
+
+    th {
+      background-color: #39395f;
+    }
+
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #39395f;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--text-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+
+    .accordion:hover {
+      background-color: #4a4a6a;
+    }
+
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Nmap Complete Cheatsheet</h1>
+
+    <!-- Section Template -->
+    <button class="accordion">🧭 Basic Syntax</button>
+    <div class="panel section">
+      <code>nmap [options] &lt;target&gt;</code><br />
+      Examples:<br />
+      <code>nmap 192.168.1.1</code><br />
+      <code>nmap scanme.nmap.org</code>
+    </div>
+
+    <button class="accordion">🖥️ Target Specification</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Option</th><th>Description</th></tr>
+        <tr><td><code>192.168.1.1</code></td><td>Single IP</td></tr>
+        <tr><td><code>192.168.1.1-10</code></td><td>IP Range</td></tr>
+        <tr><td><code>192.168.1.0/24</code></td><td>CIDR Notation</td></tr>
+        <tr><td><code>-iL list.txt</code></td><td>Input from file</td></tr>
+        <tr><td><code>-iR 10</code></td><td>Random 10 hosts</td></tr>
+        <tr><td><code>-6</code></td><td>Enable IPv6</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">⚡ Scan Types</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Option</th><th>Description</th></tr>
+        <tr><td><code>-sS</code></td><td>TCP SYN scan (default)</td></tr>
+        <tr><td><code>-sT</code></td><td>TCP Connect scan</td></tr>
+        <tr><td><code>-sU</code></td><td>UDP scan</td></tr>
+        <tr><td><code>-sA</code></td><td>ACK scan</td></tr>
+        <tr><td><code>-sX</code></td><td>Xmas scan</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">📦 Port Scanning</button>
+    <div class="panel section">
+      <code>-p 80</code> — Scan specific port<br />
+      <code>-p 1-1000</code> — Scan port range<br />
+      <code>-p-</code> — Scan all ports<br />
+      <code>--top-ports 100</code> — Top 100 common ports
+    </div>
+
+    <button class="accordion">⏱️ Timing & Performance</button>
+    <div class="panel section">
+      <code>-T0 to -T5</code> — Timing template<br />
+      <code>--min-rate / --max-rate</code> — Rate control<br />
+      <code>--max-retries</code> — Limit retries<br />
+      <code>--host-timeout</code> — Timeout per host
+    </div>
+
+    <button class="accordion">🔍 Service & OS Detection</button>
+    <div class="panel section">
+      <code>-sV</code> — Version detection<br />
+      <code>-O</code> — OS detection<br />
+      <code>-A</code> — Aggressive: OS, version, scripts
+    </div>
+
+    <button class="accordion">📜 NSE Script Scanning</button>
+    <div class="panel section">
+      <code>-sC</code> — Default scripts<br />
+      <code>--script vuln</code> — Vulnerability scripts<br />
+      <code>--script-args='var=value'</code> — Script args
+    </div>
+
+    <button class="accordion">🧱 Firewall Evasion</button>
+    <div class="panel section">
+      <code>-f</code> — Fragment packets<br />
+      <code>-D RND:10</code> — Decoys<br />
+      <code>-S IP</code> — Spoof source IP<br />
+      <code>--data-length</code> — Pad data
+    </div>
+
+    <button class="accordion">📋 Output Formats</button>
+    <div class="panel section">
+      <code>-oN</code> — Normal<br />
+      <code>-oX</code> — XML<br />
+      <code>-oG</code> — Grepable<br />
+      <code>-oA</code> — All formats
+    </div>
+
+    <button class="accordion">🌐 Host Discovery</button>
+    <div class="panel section">
+      <code>-sn</code> — Ping scan<br />
+      <code>-Pn</code> — Treat as alive<br />
+      <code>-PS</code>, <code>-PA</code>, <code>-PU</code> — TCP/UDP/ACK pings
+    </div>
+
+    <button class="accordion">🛰️ Advanced Features</button>
+    <div class="panel section">
+      <code>--traceroute</code> — Trace route<br />
+      <code>--reason</code> — Show reasons<br />
+      <code>--open</code> — Only open ports<br />
+      <code>--iflist</code> — List interfaces
+    </div>
+
+    <button class="accordion">💡 Examples</button>
+    <div class="panel section">
+      <code>nmap -T4 -F target</code> — Fast scan<br />
+      <code>nmap -sS -sU -p T:1-65535,U:1-1000 target</code> — Full TCP & UDP scan<br />
+      <code>nmap -A -oA results target</code> — Aggressive + All output formats
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #aaa;">
+      Made with ☕ for Nmap users
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for (let i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = panel.style.display === "block" ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

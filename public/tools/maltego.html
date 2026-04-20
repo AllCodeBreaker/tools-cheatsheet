@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maltego Cheatsheet</title>
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --card-color: #2e2e40;
+      --text-color: #f4f4f4;
+      --accent-color: #4cc9f0;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    h1 {
+      color: var(--accent-color);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .section code {
+      background: #111;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff5a0;
+      font-size: 0.95em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      text-align: left;
+    }
+
+    th {
+      background-color: #39395f;
+    }
+
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #39395f;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--text-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+
+    .accordion:hover {
+      background-color: #4a4a6a;
+    }
+
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Maltego Complete Cheatsheet</h1>
+
+    <button class="accordion">🧠 What is Maltego?</button>
+    <div class="panel section">
+      Maltego is a powerful OSINT and link analysis tool used to discover relationships between people, domains, companies, emails, IPs, and more. It uses "transforms" to retrieve and correlate data in real-time.
+    </div>
+
+    <button class="accordion">🔍 Core Concepts</button>
+    <div class="panel section">
+      <ul>
+        <li><strong>Entities:</strong> Data points (e.g., person, email, domain)</li>
+        <li><strong>Transforms:</strong> Actions performed on entities to gather data</li>
+        <li><strong>Graphs:</strong> Visual representation of relationships</li>
+        <li><strong>Machines:</strong> Automated sequence of transforms</li>
+      </ul>
+    </div>
+
+    <button class="accordion">🧩 Common Entity Types</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Entity</th><th>Description</th></tr>
+        <tr><td><code>Person</code></td><td>Full name or alias</td></tr>
+        <tr><td><code>Email Address</code></td><td>Target email accounts</td></tr>
+        <tr><td><code>Phone Number</code></td><td>Linked to individuals/companies</td></tr>
+        <tr><td><code>Domain</code></td><td>Internet domain name</td></tr>
+        <tr><td><code>Website</code></td><td>Specific URLs</td></tr>
+        <tr><td><code>IP Address</code></td><td>Host IPs for lookup</td></tr>
+        <tr><td><code>Company</code></td><td>Organization name</td></tr>
+        <tr><td><code>Location</code></td><td>Geo/physical data</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">⚙️ Most Used Transforms</button>
+    <div class="panel section">
+      <ul>
+        <li><code>[Domain] → DNS Name</code> — Resolve to IPs, subdomains</li>
+        <li><code>[IP Address] → Netblock owner</code></li>
+        <li><code>[Email Address] → Domain</code> — Related domain discovery</li>
+        <li><code>[Person] → Email addresses</code></li>
+        <li><code>[Website] → Hosted IP</code></li>
+        <li><code>[Domain] → Whois info</code></li>
+        <li><code>[Domain] → MX/NS records</code></li>
+      </ul>
+    </div>
+
+    <button class="accordion">📦 Useful Machines</button>
+    <div class="panel section">
+      <ul>
+        <li><code>Footprint L1/L2/L3</code> — Recon on a domain (passive to active)</li>
+        <li><code>Company Stalker</code> — Gathers people & emails from a domain</li>
+        <li><code>Discover Social Networks</code></li>
+        <li><code>To WHOIS Info</code> — For domain/IP ownership details</li>
+      </ul>
+    </div>
+
+    <button class="accordion">💡 Investigation Example</button>
+    <div class="panel section">
+      1. Start with a domain:<br />
+      <code>example.com</code><br /><br />
+      2. Run transforms:<br />
+      <code>To DNS Name → To IP → To Netblock Owner → To Domains</code><br /><br />
+      3. Extract email addresses<br />
+      4. Pivot to social profiles using email/person<br />
+      5. Map infrastructure using WHOIS, NS, MX, reverse IP<br />
+    </div>
+
+    <button class="accordion">🎯 Tips & Tricks</button>
+    <div class="panel section">
+      <ul>
+        <li>Right-click entity → Run transform</li>
+        <li>Use filters to isolate specific entity types</li>
+        <li>Use “Detail View” to inspect entity metadata</li>
+        <li>Transform Hub → Install public/private data sources</li>
+        <li>Use “Notes” on entities to keep records</li>
+      </ul>
+    </div>
+
+    <button class="accordion">⌨️ Keyboard Shortcuts</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Shortcut</th><th>Action</th></tr>
+        <tr><td><code>Ctrl + T</code></td><td>Run last transform</td></tr>
+        <tr><td><code>Ctrl + Z</code></td><td>Undo</td></tr>
+        <tr><td><code>Ctrl + Y</code></td><td>Redo</td></tr>
+        <tr><td><code>Ctrl + G</code></td><td>Group selected entities</td></tr>
+        <tr><td><code>Ctrl + E</code></td><td>Edit entity details</td></tr>
+        <tr><td><code>Del</code></td><td>Delete selected entity</td></tr>
+      </table>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #aaa;">
+      Made with 🧠 for Intelligence Analysts & Investigators
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for (let i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = panel.style.display === "block" ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Masscan Cheatsheet</title>
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --card-color: #2e2e40;
+      --text-color: #f4f4f4;
+      --accent-color: #3498db;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    h1 {
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    code {
+      background: #111;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff5a0;
+      font-size: 0.95em;
+      word-break: break-word;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      text-align: left;
+    }
+    th {
+      background-color: #2980b9;
+    }
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #2980b9;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--text-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+    .accordion:hover {
+      background-color: #3498db;
+    }
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Masscan Cheatsheet</h1>
+
+    <button class="accordion">⚙️ Basic Syntax</button>
+    <div class="panel section">
+      <code>masscan &lt;target&gt; -p&lt;ports&gt; --rate &lt;pps&gt;</code>
+      <p>Scan target IP or network for open ports at a given packet rate.</p>
+    </div>
+
+    <button class="accordion">🔍 Common Options</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Option</th><th>Description</th></tr>
+        <tr><td><code>-p&lt;ports&gt;</code></td><td>Ports or port ranges to scan (e.g. 80,443 or 1-1000)</td></tr>
+        <tr><td><code>--rate &lt;pps&gt;</code></td><td>Packets per second to send (e.g. 1000)</td></tr>
+        <tr><td><code>-iL &lt;file&gt;</code></td><td>Input list of IPs or networks</td></tr>
+        <tr><td><code>-oX &lt;file&gt;</code></td><td>Output results in XML format</td></tr>
+        <tr><td><code>-oG &lt;file&gt;</code></td><td>Output results in grepable format</td></tr>
+        <tr><td><code>-oJ &lt;file&gt;</code></td><td>Output results in JSON format</td></tr>
+        <tr><td><code>--interface &lt;iface&gt;</code></td><td>Specify network interface</td></tr>
+        <tr><td><code>--source-ip &lt;IP&gt;</code></td><td>Use custom source IP address</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">⚙️ Examples</button>
+    <div class="panel section">
+      <ul>
+        <li>Scan ports 80 and 443 on 192.168.1.1 at 1000 pps:<br><code>masscan 192.168.1.1 -p80,443 --rate 1000</code></li>
+        <li>Scan entire subnet for ports 1-1000:<br><code>masscan 192.168.1.0/24 -p1-1000 --rate 500</code></li>
+        <li>Scan IPs from a file:<br><code>masscan -iL targets.txt -p22,80 --rate 2000</code></li>
+        <li>Save results in XML:<br><code>masscan 10.0.0.0/8 -p80 --rate 1000 -oX results.xml</code></li>
+      </ul>
+    </div>
+
+    <button class="accordion">💡 Tips & Tricks</button>
+    <div class="panel section">
+      <ul>
+        <li>Masscan is extremely fast; adjust <code>--rate</code> carefully to avoid flooding the network.</li>
+        <li>Run with root privileges for raw packet sending.</li>
+        <li>Use smaller subnets for better control and reliability.</li>
+        <li>Combine with Nmap for detailed scans of discovered ports.</li>
+      </ul>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #aaa;">
+      Made with 🔍 for Fast Network Scanning
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for(let i=0; i < acc.length; i++){
+      acc[i].addEventListener("click", function(){
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = (panel.style.display === "block") ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

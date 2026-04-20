@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Java - java.util Documentation</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; color: #333; }
+  h1, h2, h3 { color: #2c3e50; }
+  nav { margin-bottom: 30px; }
+  nav ul { list-style-type: none; padding: 0; }
+  nav li { margin: 5px 0; }
+  a { text-decoration: none; color: #2980b9; }
+  a:hover { text-decoration: underline; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+  th, td { border: 1px solid #ddd; padding: 8px; text-align: left; font-family: monospace; }
+  th { background-color: #f4f6f7; }
+  pre { background: #f4f6f7; padding: 10px; overflow-x: auto; }
+  @media (max-width: 600px) {
+    table, thead, tbody, th, td, tr { display: block; }
+    th { position: absolute; top: -9999px; left: -9999px; }
+    tr { margin-bottom: 15px; }
+    td { border: none; position: relative; padding-left: 50%; }
+    td:before {
+      position: absolute;
+      top: 8px; left: 8px;
+      width: 45%;
+      white-space: nowrap;
+      font-weight: bold;
+      content: attr(data-label);
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>Java - java.util</h1>
+<p><em>java.util</em> package provides a large collection of utility classes including data structures, date/time facilities, random number generation, and concurrency utilities. It is fundamental for Java development to manage collections and perform common programming tasks.</p>
+
+<nav>
+  <h2>Table of Contents</h2>
+  <ul>
+    <li><a href="#classes">Classes</a></li>
+    <li><a href="#functions">Functions</a></li>
+    <li><a href="#constants">Constants</a></li>
+  </ul>
+</nav>
+
+<section id="classes">
+  <h2>Classes</h2>
+
+  <article id="ArrayList">
+    <h3>ArrayList</h3>
+    <p><strong>Purpose:</strong> Resizable-array implementation of the <code>List</code> interface. Provides dynamic arrays that grow as needed.</p>
+
+    <h4>Constructors</h4>
+    <pre><code>ArrayList()</code></pre>
+    <p>Creates an empty list with default capacity.</p>
+
+    <pre><code>ArrayList(Collection<? extends E> c)</code></pre>
+    <p>Creates a list containing elements of specified collection.</p>
+
+    <pre><code>ArrayList(int initialCapacity)</code></pre>
+    <p>Creates an empty list with specified initial capacity.</p>
+
+    <h4>Methods</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Signature</th>
+          <th>Description</th>
+          <th>Return Type</th>
+          <th>Parameters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>add</td>
+          <td>boolean add(E e)</td>
+          <td>Adds element at the end.</td>
+          <td>boolean</td>
+          <td>e - element to add</td>
+        </tr>
+        <tr>
+          <td>get</td>
+          <td>E get(int index)</td>
+          <td>Returns element at specified index.</td>
+          <td>E</td>
+          <td>index - position to fetch</td>
+        </tr>
+        <tr>
+          <td>remove</td>
+          <td>E remove(int index)</td>
+          <td>Removes element at index and returns it.</td>
+          <td>E</td>
+          <td>index - position to remove</td>
+        </tr>
+        <tr>
+          <td>size</td>
+          <td>int size()</td>
+          <td>Returns number of elements.</td>
+          <td>int</td>
+          <td>None</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>Best Practices</h4>
+    <ul>
+      <li>Use when frequent random access is needed.</li>
+      <li>Not optimized for frequent insertions/removals in middle (use LinkedList then).</li>
+      <li>Initial capacity tuning improves performance by reducing resizing.</li>
+    </ul>
+  </article>
+
+  <article id="HashMap">
+    <h3>HashMap</h3>
+    <p><strong>Purpose:</strong> Implementation of the <code>Map</code> interface based on hash table. Allows null keys and values, unordered.</p>
+
+    <h4>Constructors</h4>
+    <pre><code>HashMap()</code></pre>
+    <p>Constructs empty map with default capacity and load factor.</p>
+
+    <pre><code>HashMap(int initialCapacity)</code></pre>
+    <p>Constructs with specified initial capacity.</p>
+
+    <pre><code>HashMap(int initialCapacity, float loadFactor)</code></pre>
+    <p>Constructs with specified initial capacity and load factor.</p>
+
+    <pre><code>HashMap(Map<? extends K,? extends V> m)</code></pre>
+    <p>Constructs map with mappings from specified map.</p>
+
+    <h4>Methods</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Signature</th>
+          <th>Description</th>
+          <th>Return Type</th>
+          <th>Parameters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>put</td>
+          <td>V put(K key, V value)</td>
+          <td>Associates specified value with key.</td>
+          <td>V (previous value or null)</td>
+          <td>key - mapping key, value - mapped value</td>
+        </tr>
+        <tr>
+          <td>get</td>
+          <td>V get(Object key)</td>
+          <td>Returns value to which key maps, or null.</td>
+          <td>V</td>
+          <td>key - lookup key</td>
+        </tr>
+        <tr>
+          <td>remove</td>
+          <td>V remove(Object key)</td>
+          <td>Removes mapping for key if present.</td>
+          <td>V</td>
+          <td>key - key to remove</td>
+        </tr>
+        <tr>
+          <td>containsKey</td>
+          <td>boolean containsKey(Object key)</td>
+          <td>Returns true if map contains key.</td>
+          <td>boolean</td>
+          <td>key - lookup key</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>Best Practices</h4>
+    <ul>
+      <li>Use for fast key-based lookup.</li>
+      <li>Not thread-safe; use ConcurrentHashMap for concurrency.</li>
+      <li>Initial capacity and load factor tuning can improve performance and memory usage.</li>
+    </ul>
+  </article>
+
+  <article id="LinkedList">
+    <h3>LinkedList</h3>
+    <p><strong>Purpose:</strong> Doubly-linked list implementation of the List and Deque interfaces. Good for frequent insertions/removals.</p>
+
+    <h4>Constructors</h4>
+    <pre><code>LinkedList()</code></pre>
+    <p>Creates empty linked list.</p>
+
+    <pre><code>LinkedList(Collection<? extends E> c)</code></pre>
+    <p>Creates list containing elements of collection.</p>
+
+    <h4>Methods</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Signature</th>
+          <th>Description</th>
+          <th>Return Type</th>
+          <th>Parameters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>addFirst</td>
+          <td>void addFirst(E e)</td>
+          <td>Adds element at the start.</td>
+          <td>void</td>
+          <td>e - element to add</td>
+        </tr>
+        <tr>
+          <td>addLast</td>
+          <td>void addLast(E e)</td>
+          <td>Adds element at the end.</td>
+          <td>void</td>
+          <td>e - element to add</td>
+        </tr>
+        <tr>
+          <td>removeFirst</td>
+          <td>E removeFirst()</td>
+          <td>Removes and returns first element.</td>
+          <td>E</td>
+          <td>None</td>
+        </tr>
+        <tr>
+          <td>get</td>
+          <td>E get(int index)</td>
+          <td>Returns element at position.</td>
+          <td>E</td>
+          <td>index - position</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>Best Practices</h4>
+    <ul>
+      <li>Prefer LinkedList if your use case requires lots of insertions/removals.</li>
+      <li>Not ideal for frequent random access (slow get(index)).</li>
+    </ul>
+  </article>
+
+  <!-- More classes like HashSet, TreeMap, PriorityQueue, etc. can be added similarly -->
+
+</section>
+
+<section id="functions">
+  <h2>Functions</h2>
+  <p><em>Note: java.util is a package with mostly classes and interfaces; standalone utility functions are inside classes like Collections, Arrays.</em></p>
+
+  <article id="Collections.sort">
+    <h3>Collections.sort</h3>
+    <pre><code>void sort(List<T> list)</code></pre>
+    <p>Sorts the specified list into ascending order according to natural ordering.</p>
+    <p><strong>Parameters:</strong></p>
+    <ul>
+      <li><code>list</code> - the list to be sorted</li>
+    </ul>
+    <p><strong>Returns:</strong> void</p>
+    <p><strong>Failure:</strong> Throws <code>ClassCastException</code> if list elements are not mutually comparable.</p>
+    <p><strong>Best Practices:</strong> Use when sorting Lists; prefer streams for functional style sorting in Java 8+.</p>
+  </article>
+
+  <article id="Collections.shuffle">
+    <h3>Collections.shuffle</h3>
+    <pre><code>void shuffle(List<?> list)</code></pre>
+    <p>Randomly permutes the elements in the specified list.</p>
+    <p><strong>Parameters:</strong></p>
+    <ul>
+      <li><code>list</code> - the list to shuffle</li>
+    </ul>
+    <p><strong>Returns:</strong> void</p>
+    <p><strong>Best Practices:</strong> Use for randomizing elements, e.g., in games or tests.</p>
+  </article>
+
+  <article id="Arrays.asList">
+    <h3>Arrays.asList</h3>
+    <pre><code>List<T> asList(T... a)</code></pre>
+    <p>Returns a fixed-size list backed by the specified array.</p>
+    <p><strong>Parameters:</strong></p>
+    <ul>
+      <li><code>a</code> - array to be converted</li>
+    </ul>
+    <p><strong>Returns:</strong> List view of the array.</p>
+    <p><strong>Best Practices:</strong> Useful for quick conversion, but the returned list is fixed-size (cannot add/remove).</p>
+  </article>
+
+</section>
+
+<section id="constants">
+  <h2>Constants</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Value</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Calendar.JANUARY</td>
+        <td>0</td>
+        <td>Represents January month in Calendar class.</td>
+      </tr>
+      <tr>
+        <td>Calendar.FEBRUARY</td>
+        <td>1</td>
+        <td>Represents February month.</td>
+      </tr>
+      <tr>
+        <td>TimeZone.GMT_ID</td>
+        <td>"GMT"</td>
+        <td>ID string for Greenwich Mean Time zone.</td>
+      </tr>
+      <tr>
+        <td>Collections.EMPTY_LIST</td>
+        <td>Unmodifiable empty List</td>
+        <td>Represents empty immutable List.</td>
+      </tr>
+      <tr>
+        <td>Collections.EMPTY_MAP</td>
+        <td>Unmodifiable empty Map</td>
+        <td>Represents empty immutable Map.</td>
+      </tr>
+      <tr>
+        <td>Collections.EMPTY_SET</td>
+        <td>Unmodifiable empty Set</td>
+        <td>Represents empty immutable Set.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+</body>
+</html>

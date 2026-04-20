@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Google Dorking Cheatsheet</title>
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --card-color: #2e2e40;
+      --text-color: #f4f4f4;
+      --accent-color: #16a085;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    h1 {
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    code {
+      background: #111;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff5a0;
+      font-size: 0.95em;
+      word-break: break-word;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      text-align: left;
+    }
+    th {
+      background-color: #138d75;
+    }
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #138d75;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--text-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+    .accordion:hover {
+      background-color: #16a085;
+    }
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Google Dorking Cheatsheet</h1>
+
+    <button class="accordion">🔍 Basic Operators</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Operator</th><th>Usage</th><th>Example</th></tr>
+        <tr><td><code>site:</code></td><td>Search within a domain</td><td><code>site:example.com</code></td></tr>
+        <tr><td><code>filetype:</code></td><td>Search for specific file types</td><td><code>filetype:pdf</code></td></tr>
+        <tr><td><code>inurl:</code></td><td>Find URLs containing a keyword</td><td><code>inurl:admin</code></td></tr>
+        <tr><td><code>intitle:</code></td><td>Find pages with keyword in title</td><td><code>intitle:"login page"</code></td></tr>
+        <tr><td><code>cache:</code></td><td>View cached version of a page</td><td><code>cache:example.com</code></td></tr>
+        <tr><td><code>allintext:</code></td><td>Find pages with all words in text</td><td><code>allintext:password</code></td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">🕵️‍♂️ Useful Dorks</button>
+    <div class="panel section">
+      <ul>
+        <li><code>filetype:sql "password"</code> — Find SQL files with password data</li>
+        <li><code>intitle:"index of" passwd</code> — Directory listings containing passwd files</li>
+        <li><code>inurl:wp-admin</code> — WordPress admin pages</li>
+        <li><code>site:gov confidential</code> — Confidential data on government sites</li>
+        <li><code>"error log" filetype:log</code> — Exposed error logs</li>
+        <li><code>ext:env DB_PASSWORD</code> — Environment files containing database passwords</li>
+      </ul>
+    </div>
+
+    <button class="accordion">⚙️ Tips & Safety</button>
+    <div class="panel section">
+      <ul>
+        <li>Use quotes for exact phrase matching.</li>
+        <li>Combine operators for precise results.</li>
+        <li>Be ethical and avoid accessing unauthorized data.</li>
+        <li>Google may block or throttle queries; respect limits.</li>
+        <li>Use dorking as part of open-source intelligence (OSINT) investigations.</li>
+      </ul>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #aaa;">
+      Made with 🔎 for OSINT and Pentesting
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for(let i=0; i < acc.length; i++){
+      acc[i].addEventListener("click", function(){
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = (panel.style.display === "block") ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

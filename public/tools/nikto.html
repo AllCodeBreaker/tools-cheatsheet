@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nikto Web Scanner Cheatsheet</title>
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --card-color: #2e2e40;
+      --text-color: #f4f4f4;
+      --accent-color: #c0392b;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    h1 {
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    code {
+      background: #111;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff5a0;
+      font-size: 0.95em;
+      word-break: break-word;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      text-align: left;
+    }
+    th {
+      background-color: #e74c3c;
+    }
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #e74c3c;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--text-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+    .accordion:hover {
+      background-color: #ff6659;
+    }
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Nikto Web Scanner Complete Cheatsheet</h1>
+
+    <button class="accordion">⚙️ Basic Scan</button>
+    <div class="panel section">
+      <code>nikto -h &lt;target_url_or_IP&gt;</code>
+      <p>Scan target web server for common vulnerabilities and misconfigurations.</p>
+    </div>
+
+    <button class="accordion">🔍 Scan Options</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Option</th><th>Description</th></tr>
+        <tr><td><code>-h</code></td><td>Host to scan (domain or IP)</td></tr>
+        <tr><td><code>-p</code></td><td>Specify port(s), e.g. <code>80,443</code></td></tr>
+        <tr><td><code>-ssl</code></td><td>Force SSL mode (https)</td></tr>
+        <tr><td><code>-Tuning</code></td><td>Enable specific tests by category (e.g. 1 for file enumeration)</td></tr>
+        <tr><td><code>-Plugins</code></td><td>Specify plugins to run</td></tr>
+        <tr><td><code>-Display</code></td><td>Display options (e.g., 123 for verbose, debug)</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">💾 Output Options</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Option</th><th>Description</th></tr>
+        <tr><td><code>-o &lt;file&gt;</code></td><td>Save scan output to file</td></tr>
+        <tr><td><code>-Format &lt;type&gt;</code></td><td>Output format: txt, csv, html, xml</td></tr>
+        <tr><td><code>-output &lt;file&gt;</code></td><td>Alias for <code>-o</code></td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">⚙️ Advanced Scanning</button>
+    <div class="panel section">
+      <ul>
+        <li>Scan using custom user agent:<br><code>nikto -h &lt;host&gt; -useragent "Mozilla/5.0"</code></li>
+        <li>Enable SSL scanning:<br><code>nikto -h &lt;host&gt; -ssl</code></li>
+        <li>Use a proxy:<br><code>nikto -h &lt;host&gt; -useproxy http://127.0.0.1:8080</code></li>
+        <li>Ignore specific tests:<br><code>nikto -h &lt;host&gt; -skip test_id</code></li>
+        <li>Update Nikto plugins and database:<br><code>nikto -update</code></li>
+      </ul>
+    </div>
+
+    <button class="accordion">💡 Tips & Tricks</button>
+    <div class="panel section">
+      <ul>
+        <li>Run as root or with elevated privileges for best results.</li>
+        <li>Combine Nikto with proxy tools like Burp Suite for deeper testing.</li>
+        <li>Use verbose output for debugging:<br><code>nikto -h &lt;host&gt; -Display V</code></li>
+        <li>Keep Nikto updated regularly for new vulnerabilities and plugins.</li>
+      </ul>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #aaa;">
+      Made with ❤️ for Web Security Enthusiasts & Pentesters
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for(let i=0; i < acc.length; i++){
+      acc[i].addEventListener("click", function(){
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = (panel.style.display === "block") ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

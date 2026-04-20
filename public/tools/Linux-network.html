@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Linux Cheatsheet - Networking</title>
+  <style>
+    :root {
+      --bg-color: #2a1a3c;
+      --card-color: #3e275a;
+      --text-color: #f3e5f5;
+      --accent-color: #9c27b0;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    h1 {
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    .section {
+      background-color: var(--card-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    code {
+      background: #000;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ce93d8;
+      font-size: 0.95em;
+      word-break: break-word;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #555;
+      text-align: left;
+    }
+    th {
+      background-color: #7b1fa2;
+    }
+    .accordion {
+      cursor: pointer;
+      padding: 15px;
+      background-color: #7b1fa2;
+      border: none;
+      text-align: left;
+      font-size: 1.1em;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      color: var(--text-color);
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+    .accordion:hover {
+      background-color: #9c27b0;
+    }
+    .panel {
+      padding: 0 18px;
+      background-color: var(--card-color);
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid var(--accent-color);
+    }
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .accordion {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Linux Cheatsheet - Networking</h1>
+
+    <button class="accordion">🌐 ip / ifconfig</button>
+    <div class="panel section">
+      <p>Display or manage network interfaces.</p>
+      <p><strong>Modern:</strong> <code>ip a</code> or <code>ip addr</code></p>
+      <p><strong>Legacy:</strong> <code>ifconfig</code> (may require install)</p>
+    </div>
+
+    <button class="accordion">📡 ping</button>
+    <div class="panel section">
+      <p>Test connectivity to a host/IP.</p>
+      <p><strong>Example:</strong> <code>ping google.com</code></p>
+      <p><code>-c 4</code>: Send 4 packets only<br/><code>-i 0.5</code>: Interval 0.5s</p>
+    </div>
+
+    <button class="accordion">📊 netstat / ss</button>
+    <div class="panel section">
+      <p><code>netstat</code>: Show network connections (deprecated)</p>
+      <p><code>ss</code>: Modern replacement</p>
+      <p><strong>Example:</strong> <code>ss -tuln</code> (list listening TCP/UDP ports)</p>
+    </div>
+
+    <button class="accordion">🔍 dig / nslookup</button>
+    <div class="panel section">
+      <p>Query DNS records.</p>
+      <p><code>dig</code>: Modern DNS tool<br/><code>nslookup</code>: Simpler but older</p>
+      <p><strong>Example:</strong> <code>dig openai.com</code></p>
+      <p><strong>Install (Debian):</strong> <code>sudo apt install dnsutils</code></p>
+    </div>
+
+    <button class="accordion">📶 traceroute</button>
+    <div class="panel section">
+      <p>Trace route of packets to destination (each hop).</p>
+      <p><strong>Example:</strong> <code>traceroute google.com</code></p>
+      <p><strong>Install:</strong> <code>sudo apt install traceroute</code></p>
+    </div>
+
+    <button class="accordion">🔗 hostname / nmcli</button>
+    <div class="panel section">
+      <p><code>hostname</code>: Show/set system hostname</p>
+      <p><code>nmcli</code>: NetworkManager command-line tool</p>
+      <p><strong>Example:</strong> <code>nmcli dev status</code></p>
+    </div>
+
+    <button class="accordion">⬇️ wget / curl</button>
+    <div class="panel section">
+      <p>Download or test network endpoints.</p>
+      <table>
+        <tr><th>Command</th><th>Description</th></tr>
+        <tr><td><code>wget URL</code></td><td>Download file</td></tr>
+        <tr><td><code>curl -I URL</code></td><td>Show headers only</td></tr>
+        <tr><td><code>curl -O URL</code></td><td>Download as original name</td></tr>
+      </table>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #aaa;">
+      Page 5 of Linux Cheatsheet — Networking
+    </footer>
+  </div>
+
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for(let i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = (panel.style.display === "block") ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>
