@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python - flask</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
+
+    :root {
+      --bg: #000;
+      --surface: rgba(0, 0, 0, 0.75);
+      --border: #00ff9f;
+      --text: #00ff9f;
+      --text-dim: rgba(0,255,159,0.6);
+      --text-muted: rgba(0,255,159,0.4);
+      --accent: #00ff9f;
+      --accent-glow: 0 0 10px #00ff9f, 0 0 20px rgba(0,255,159,0.4);
+      --code-bg: #0a0a0a;
+      --code-color: #fff5a0;
+      --table-header: rgba(0,255,159,0.08);
+      --table-border: rgba(0,255,159,0.2);
+      --font: 'Share Tech Mono', 'Courier New', monospace;
+      --font-title: 'Orbitron', monospace;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: radial-gradient(circle at top, #020617, #000);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.7;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    /* ── TOP BAR ── */
+    .hk-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 24px;
+      background: #000;
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--accent-glow);
+    }
+
+    .hk-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text);
+      text-decoration: none;
+      font-family: var(--font);
+      font-size: 0.85em;
+      letter-spacing: 1px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: all 0.25s;
+      white-space: nowrap;
+    }
+    .hk-back:hover {
+      background: rgba(0,255,159,0.1);
+      box-shadow: var(--accent-glow);
+    }
+
+    .hk-topbar-title {
+      font-family: var(--font-title);
+      font-size: 0.75em;
+      letter-spacing: 3px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .hk-blink {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: var(--accent);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ── MAIN CONTAINER ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 24px;
+    }
+
+    /* ── HEADINGS ── */
+    h1 {
+      font-family: var(--font-title);
+      font-size: clamp(1.4em, 3vw, 2em);
+      letter-spacing: 3px;
+      text-align: center;
+      margin: 20px 0 30px;
+      text-transform: uppercase;
+      text-shadow: var(--accent-glow);
+    }
+
+    h2 {
+      font-family: var(--font-title);
+      font-size: 1em;
+      letter-spacing: 2px;
+      color: var(--text);
+      margin: 24px 0 12px;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      font-size: 0.95em;
+      letter-spacing: 1px;
+      color: var(--text-dim);
+      margin: 16px 0 8px;
+    }
+
+    /* ── LINKS ── */
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0,255,159,0.3);
+      transition: border-color 0.2s;
+    }
+    a:hover { border-color: var(--accent); }
+
+    /* ── SECTIONS / CARDS ── */
+    .section {
+      background: var(--surface);
+      border: 1px solid rgba(0,255,159,0.25);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(0,255,159,0.04), transparent);
+      pointer-events: none;
+    }
+    .section:hover {
+      border-color: var(--border);
+      box-shadow: 0 0 16px rgba(0,255,159,0.15);
+    }
+
+    /* ── CODE ── */
+    code {
+      background: var(--code-bg);
+      color: var(--code-color);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 0.92em;
+      font-family: var(--font);
+      border: 1px solid rgba(255,245,160,0.15);
+      word-break: break-word;
+    }
+
+    pre {
+      background: var(--code-bg);
+      border: 1px solid rgba(0,255,159,0.2);
+      border-left: 3px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 12px 0;
+    }
+    pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: var(--code-color);
+      font-size: 0.9em;
+    }
+
+    /* ── TABLES ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.92em;
+    }
+    th {
+      background: var(--table-header);
+      color: var(--text);
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: normal;
+      letter-spacing: 1px;
+      border-bottom: 1px solid var(--border);
+      text-transform: uppercase;
+      font-size: 0.85em;
+    }
+    td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--table-border);
+      color: var(--text-dim);
+      vertical-align: top;
+    }
+    tr:hover td { background: rgba(0,255,159,0.04); color: var(--text); }
+    td code { color: var(--code-color); }
+
+    /* ── ACCORDION ── */
+    .accordion {
+      cursor: pointer;
+      padding: 14px 18px;
+      background: rgba(0,255,159,0.05);
+      border: 1px solid rgba(0,255,159,0.25);
+      border-radius: 6px;
+      text-align: left;
+      font-size: 0.95em;
+      font-family: var(--font);
+      letter-spacing: 1px;
+      outline: none;
+      transition: all 0.25s;
+      width: 100%;
+      color: var(--text);
+      margin-top: 8px;
+      position: relative;
+    }
+    .accordion::after {
+      content: '▶';
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.7em;
+      color: var(--text-dim);
+      transition: transform 0.25s;
+    }
+    .accordion.active::after { transform: translateY(-50%) rotate(90deg); }
+    .accordion:hover, .accordion.active {
+      background: rgba(0,255,159,0.1);
+      border-color: var(--border);
+      box-shadow: 0 0 10px rgba(0,255,159,0.2);
+    }
+    .panel {
+      display: none;
+      padding: 16px 18px;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(0,255,159,0.15);
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      border-left: 3px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+    .panel.open { display: block; }
+
+    /* ── LISTS ── */
+    ul, ol {
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+    li {
+      color: var(--text-dim);
+      margin-bottom: 4px;
+      line-height: 1.6;
+    }
+    li::marker { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 0.8em;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      padding: 20px;
+      border-top: 1px solid rgba(0,255,159,0.1);
+    }
+
+    /* ── MISC ── */
+    p { color: var(--text-dim); margin-bottom: 10px; }
+    strong, b { color: var(--text); font-weight: normal; }
+    hr { border: none; border-top: 1px solid rgba(0,255,159,0.15); margin: 20px 0; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .hk-topbar { padding: 10px 16px; }
+      .container { padding: 20px 16px; }
+      h1 { font-size: 1.2em; }
+      table { font-size: 0.85em; }
+    }
+  </style>
+
+</head>
+<body>
+  <div class="hk-topbar">
+    <a href="../index.html" class="hk-back">← DASHBOARD</a>
+    <span class="hk-topbar-title">TOOLS CHEATSHEET<span class="hk-blink"></span></span>
+  </div>
+
+<h1>Python - flask</h1>
+<p><strong>Description:</strong> Flask is a lightweight WSGI web application framework in Python. It is designed to make getting started quick and easy, with the ability to scale up to complex applications. Flask provides tools, libraries, and technologies to build web applications, emphasizing simplicity, flexibility, and fine-grained control.</p>
+
+<nav>
+  <strong>Contents:</strong>
+  <a href="#classes">Classes</a> |
+  <a href="#functions">Functions</a> |
+  <a href="#constants">Constants</a> |
+  <a href="#exceptions">Exceptions</a>
+</nav>
+
+<hr />
+
+<section id="classes">
+  <h2>Classes</h2>
+
+  <article id="Flask">
+    <h3>Flask</h3>
+    <p><strong>Purpose:</strong> The main Flask application class. Represents the web application and provides routing, request handling, and configuration.</p>
+    <h4>Constructors</h4>
+    <pre><code>Flask(import_name, static_url_path=None, static_folder='static', template_folder='templates', instance_path=None, instance_relative_config=False, root_path=None)</code></pre>
+
+    <h4>Methods</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Method &amp; Signature</th>
+          <th>Description</th>
+          <th>Return Type</th>
+          <th>Parameters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Method &amp; Signature">route(rule, **options)</td>
+          <td>Decorator to bind a function to a URL route.</td>
+          <td>function decorator</td>
+          <td>rule (str), options (dict)</td>
+        </tr>
+        <tr>
+          <td data-label="Method &amp; Signature">run(host=None, port=None, debug=None, **options)</td>
+          <td>Runs the Flask application on the local development server.</td>
+          <td>None</td>
+          <td>host (str), port (int), debug (bool), options</td>
+        </tr>
+        <tr>
+          <td data-label="Method &amp; Signature">add_url_rule(rule, endpoint=None, view_func=None, **options)</td>
+          <td>Adds a URL rule to the application.</td>
+          <td>None</td>
+          <td>rule (str), endpoint (str), view_func (callable), options</td>
+        </tr>
+        <tr>
+          <td data-label="Method &amp; Signature">before_request(func)</td>
+          <td>Registers a function to run before each request.</td>
+          <td>function decorator</td>
+          <td>func (callable)</td>
+        </tr>
+        <tr>
+          <td data-label="Method &amp; Signature">after_request(func)</td>
+          <td>Registers a function to run after each request.</td>
+          <td>function decorator</td>
+          <td>func (callable)</td>
+        </tr>
+        <tr>
+          <td data-label="Method &amp; Signature">teardown_request(func)</td>
+          <td>Registers a function to run when tearing down the request context.</td>
+          <td>function decorator</td>
+          <td>func (callable)</td>
+        </tr>
+        <tr>
+          <td data-label="Method &amp; Signature">config.from_pyfile(filename, silent=False)</td>
+          <td>Load configuration values from a Python file.</td>
+          <td>None</td>
+          <td>filename (str), silent (bool)</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>Best Practices</h4>
+    <ul>
+      <li>Use <code>route</code> decorators to clearly define URL endpoints.</li>
+      <li>Separate configuration files and load via <code>config.from_pyfile()</code> for security and manageability.</li>
+      <li>Use <code>before_request</code> and <code>after_request</code> hooks for common tasks like authentication or logging.</li>
+      <li>For production, use a production-ready server (e.g., Gunicorn), not the built-in <code>run()</code>.</li>
+      <li>Enable <code>debug</code> mode only during development.</li>
+    </ul>
+  </article>
+
+  <article id="Request">
+    <h3>Request</h3>
+    <p><strong>Purpose:</strong> Represents the incoming HTTP request data. Provides access to form data, headers, cookies, etc.</p>
+    <h4>Constructors</h4>
+    <pre><code>Request(environ, populate_request=True, shallow=False)</code></pre>
+
+    <h4>Methods</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Method &amp; Signature</th>
+          <th>Description</th>
+          <th>Return Type</th>
+          <th>Parameters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Method &amp; Signature">get_json(force=False, silent=False, cache=True)</td>
+          <td>Parses JSON body from request.</td>
+          <td>dict or None</td>
+          <td>force (bool), silent (bool), cache (bool)</td>
+        </tr>
+        <tr>
+          <td data-label="Method &amp; Signature">args</td>
+          <td>Immutable dict of query parameters.</td>
+          <td>ImmutableMultiDict</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td data-label="Method &amp; Signature">form</td>
+          <td>Immutable dict of form parameters.</td>
+          <td>ImmutableMultiDict</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td data-label="Method &amp; Signature">cookies</td>
+          <td>Dict of request cookies.</td>
+          <td>ImmutableMultiDict</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>Best Practices</h4>
+    <ul>
+      <li>Always validate and sanitize incoming data (query, form, JSON) to avoid injection attacks.</li>
+      <li>Use <code>get_json()</code> with <code>silent=True</code> to avoid exceptions on invalid JSON.</li>
+      <li>Avoid trusting client cookies without validation.</li>
+    </ul>
+  </article>
+
+  <article id="Response">
+    <h3>Response</h3>
+    <p><strong>Purpose:</strong> Represents the HTTP response sent to the client. Supports setting headers, status codes, cookies, and data.</p>
+    <h4>Constructors</h4>
+    <pre><code>Response(response=None, status=None, headers=None, mimetype=None, content_type=None, direct_passthrough=False)</code></pre>
+
+    <h4>Methods</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Method &amp; Signature</th>
+          <th>Description</th>
+          <th>Return Type</th>
+          <th>Parameters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Method &amp; Signature">set_cookie(key, value='', max_age=None, expires=None, path='/', domain=None, secure=False, httponly=False, samesite=None)</td>
+          <td>Sets a cookie on the response.</td>
+          <td>None</td>
+          <td>key (str), value (str), max_age (int), expires, etc.</td>
+        </tr>
+        <tr>
+          <td data-label="Method &amp; Signature">delete_cookie(key, path='/', domain=None)</td>
+          <td>Deletes a cookie.</td>
+          <td>None</td>
+          <td>key (str), path (str), domain (str)</td>
+        </tr>
+        <tr>
+          <td data-label="Method &amp; Signature">get_data(as_text=False)</td>
+          <td>Returns response data as bytes or string.</td>
+          <td>bytes or str</td>
+          <td>as_text (bool)</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>Best Practices</h4>
+    <ul>
+      <li>Set secure and HttpOnly flags on cookies to improve security.</li>
+      <li>Use appropriate status codes to reflect request handling results.</li>
+      <li>Avoid exposing sensitive data in responses.</li>
+    </ul>
+  </article>
+
+  <article id="Blueprint">
+    <h3>Blueprint</h3>
+    <p><strong>Purpose:</strong> A way to organize a group of related views and other code. Useful for modular applications and reusable components.</p>
+    <h4>Constructors</h4>
+    <pre><code>Blueprint(name, import_name, static_folder=None, static_url_path=None, template_folder=None, url_prefix=None, subdomain=None, url_defaults=None, root_path=None)</code></pre>
+
+    <h4>Methods</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Method &amp; Signature</th>
+          <th>Description</th>
+          <th>Return Type</th>
+          <th>Parameters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Method &amp; Signature">route(rule, **options)</td>
+          <td>Registers a route on the blueprint.</td>
+          <td>function decorator</td>
+          <td>rule (str), options (dict)</td>
+        </tr>
+        <tr>
+          <td data-label="Method &amp; Signature">register(app, options, first_registration=False)</td>
+          <td>Registers the blueprint on a Flask application.</td>
+          <td>None</td>
+          <td>app (Flask), options (dict), first_registration (bool)</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>Best Practices</h4>
+    <ul>
+      <li>Use blueprints to split large applications into modular components.</li>
+      <li>Set <code>url_prefix</code> to namespace routes.</li>
+      <li>Register blueprints early during app setup.</li>
+    </ul>
+  </article>
+</section>
+
+<section id="functions">
+  <h2>Functions</h2>
+
+  <article id="flask_current_app">
+    <h3>flask.current_app</h3>
+    <p><strong>Syntax:</strong> <code>current_app</code></p>
+    <p><strong>Description:</strong> Proxy to the Flask application handling the current request.</p>
+    <p><strong>Parameters:</strong> None</p>
+    <p><strong>Return:</strong> <code>Flask</code> instance</p>
+    <p><strong>Best Practices:</strong> Use within request context only; accessing outside raises RuntimeError.</p>
+  </article>
+
+  <article id="flask_request">
+    <h3>flask.request</h3>
+    <p><strong>Syntax:</strong> <code>request</code></p>
+    <p><strong>Description:</strong> Proxy to the current request object.</p>
+    <p><strong>Parameters:</strong> None</p>
+    <p><strong>Return:</strong> <code>Request</code> instance</p>
+    <p><strong>Best Practices:</strong> Always validate and sanitize input from <code>request</code>.</p>
+  </article>
+
+  <article id="flask_url_for">
+    <h3>url_for</h3>
+    <p><strong>Syntax:</strong> <code>url_for(endpoint, **values)</code></p>
+    <p><strong>Description:</strong> Generates a URL to the given endpoint with arguments.</p>
+    <p><strong>Parameters:</strong></p>
+    <ul>
+      <li><code>endpoint</code> (str): The endpoint name.</li>
+      <li><code>values</code>: Variable keyword arguments representing URL parameters.</li>
+    </ul>
+    <p><strong>Return:</strong> URL string</p>
+    <p><strong>Best Practices:</strong> Use instead of hardcoding URLs to avoid errors and support URL changes.</p>
+  </article>
+
+  <article id="flask_abort">
+    <h3>abort</h3>
+    <p><strong>Syntax:</strong> <code>abort(status_code, **kwargs)</code></p>
+    <p><strong>Description:</strong> Raises an HTTPException for the given status code, stopping request handling.</p>
+    <p><strong>Parameters:</strong></p>
+    <ul>
+      <li><code>status_code</code> (int): HTTP error code to return.</li>
+      <li><code>kwargs</code>: Optional message or headers.</li>
+    </ul>
+    <p><strong>Return:</strong> None (raises exception)</p>
+    <p><strong>Best Practices:</strong> Use to handle unauthorized or invalid requests gracefully.</p>
+  </article>
+
+</section>
+
+<section id="constants">
+  <h2>Constants</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Value</th>
+        <th>Usage Context</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>DEBUG</td><td>True / False</td><td>Enables debug mode in Flask app for live reload and detailed errors.</td></tr>
+      <tr><td>TESTING</td><td>True / False</td><td>Enables testing mode with exceptions propagated.</td></tr>
+      <tr><td>SECRET_KEY</td><td>string</td><td>Used for session signing and security-related features.</td></tr>
+      <tr><td>MAX_CONTENT_LENGTH</td><td>int (bytes)</td><td>Limits maximum request size for uploads.</td></tr>
+      <tr><td>JSONIFY_PRETTYPRINT_REGULAR</td><td>True / False</td><td>Controls JSON output formatting in jsonify.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="exceptions">
+  <h2>Exceptions</h2>
+
+  <article id="BadRequest">
+    <h3>BadRequest</h3>
+    <p><strong>Description:</strong> Raised when the client sends an invalid request.</p>
+    <h4>Constructors</h4>
+    <pre><code>BadRequest(description=None, response=None)</code></pre>
+    <h4>Best Practices</h4>
+    <ul>
+      <li>Use to signal malformed client data.</li>
+      <li>Catch and provide informative messages for users.</li>
+    </ul>
+  </article>
+
+  <article id="NotFound">
+    <h3>NotFound</h3>
+    <p><strong>Description:</strong> Raised when a requested resource or route is not found (HTTP 404).</p>
+    <h4>Constructors</h4>
+    <pre><code>NotFound(description=None, response=None)</code></pre>
+    <h4>Best Practices</h4>
+    <ul>
+      <li>Customize 404 error pages to improve user experience.</li>
+      <li>Log missing resources for monitoring.</li>
+    </ul>
+  </article>
+
+  <article id="MethodNotAllowed">
+    <h3>MethodNotAllowed</h3>
+    <p><strong>Description:</strong> Raised when the HTTP method is not supported by the endpoint (HTTP 405).</p>
+    <h4>Constructors</h4>
+    <pre><code>MethodNotAllowed(valid_methods=None, description=None, response=None)</code></pre>
+    <h4>Best Practices</h4>
+    <ul>
+      <li>Inform clients about allowed methods in response headers.</li>
+      <li>Handle unexpected methods gracefully.</li>
+    </ul>
+  </article>
+
+  <article id="InternalServerError">
+    <h3>InternalServerError</h3>
+    <p><strong>Description:</strong> Raised when the server encounters an unexpected condition (HTTP 500).</p>
+    <h4>Constructors</h4>
+    <pre><code>InternalServerError(description=None, response=None)</code></pre>
+    <h4>Best Practices</h4>
+    <ul>
+      <li>Log detailed errors internally but show generic messages externally.</li>
+      <li>Use error handlers to customize responses.</li>
+    </ul>
+  </article>
+
+</section>
+
+  <script>
+    document.querySelectorAll('.accordion').forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.classList.toggle('active');
+        const panel = this.nextElementSibling;
+        if (panel && panel.classList.contains('panel')) {
+          if (panel.style.display === 'block') {
+            panel.style.display = 'none';
+          } else {
+            panel.style.display = 'block';
+          }
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

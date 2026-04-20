@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Dorking Cheatsheet</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
+
+    :root {
+      --bg: #000;
+      --surface: rgba(0, 0, 0, 0.75);
+      --border: #00ff9f;
+      --text: #00ff9f;
+      --text-dim: rgba(0,255,159,0.6);
+      --text-muted: rgba(0,255,159,0.4);
+      --accent: #00ff9f;
+      --accent-glow: 0 0 10px #00ff9f, 0 0 20px rgba(0,255,159,0.4);
+      --code-bg: #0a0a0a;
+      --code-color: #fff5a0;
+      --table-header: rgba(0,255,159,0.08);
+      --table-border: rgba(0,255,159,0.2);
+      --font: 'Share Tech Mono', 'Courier New', monospace;
+      --font-title: 'Orbitron', monospace;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: radial-gradient(circle at top, #020617, #000);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.7;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    /* ── TOP BAR ── */
+    .hk-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 24px;
+      background: #000;
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--accent-glow);
+    }
+
+    .hk-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text);
+      text-decoration: none;
+      font-family: var(--font);
+      font-size: 0.85em;
+      letter-spacing: 1px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: all 0.25s;
+      white-space: nowrap;
+    }
+    .hk-back:hover {
+      background: rgba(0,255,159,0.1);
+      box-shadow: var(--accent-glow);
+    }
+
+    .hk-topbar-title {
+      font-family: var(--font-title);
+      font-size: 0.75em;
+      letter-spacing: 3px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .hk-blink {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: var(--accent);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ── MAIN CONTAINER ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 24px;
+    }
+
+    /* ── HEADINGS ── */
+    h1 {
+      font-family: var(--font-title);
+      font-size: clamp(1.4em, 3vw, 2em);
+      letter-spacing: 3px;
+      text-align: center;
+      margin: 20px 0 30px;
+      text-transform: uppercase;
+      text-shadow: var(--accent-glow);
+    }
+
+    h2 {
+      font-family: var(--font-title);
+      font-size: 1em;
+      letter-spacing: 2px;
+      color: var(--text);
+      margin: 24px 0 12px;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      font-size: 0.95em;
+      letter-spacing: 1px;
+      color: var(--text-dim);
+      margin: 16px 0 8px;
+    }
+
+    /* ── LINKS ── */
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0,255,159,0.3);
+      transition: border-color 0.2s;
+    }
+    a:hover { border-color: var(--accent); }
+
+    /* ── SECTIONS / CARDS ── */
+    .section {
+      background: var(--surface);
+      border: 1px solid rgba(0,255,159,0.25);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(0,255,159,0.04), transparent);
+      pointer-events: none;
+    }
+    .section:hover {
+      border-color: var(--border);
+      box-shadow: 0 0 16px rgba(0,255,159,0.15);
+    }
+
+    /* ── CODE ── */
+    code {
+      background: var(--code-bg);
+      color: var(--code-color);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 0.92em;
+      font-family: var(--font);
+      border: 1px solid rgba(255,245,160,0.15);
+      word-break: break-word;
+    }
+
+    pre {
+      background: var(--code-bg);
+      border: 1px solid rgba(0,255,159,0.2);
+      border-left: 3px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 12px 0;
+    }
+    pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: var(--code-color);
+      font-size: 0.9em;
+    }
+
+    /* ── TABLES ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.92em;
+    }
+    th {
+      background: var(--table-header);
+      color: var(--text);
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: normal;
+      letter-spacing: 1px;
+      border-bottom: 1px solid var(--border);
+      text-transform: uppercase;
+      font-size: 0.85em;
+    }
+    td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--table-border);
+      color: var(--text-dim);
+      vertical-align: top;
+    }
+    tr:hover td { background: rgba(0,255,159,0.04); color: var(--text); }
+    td code { color: var(--code-color); }
+
+    /* ── ACCORDION ── */
+    .accordion {
+      cursor: pointer;
+      padding: 14px 18px;
+      background: rgba(0,255,159,0.05);
+      border: 1px solid rgba(0,255,159,0.25);
+      border-radius: 6px;
+      text-align: left;
+      font-size: 0.95em;
+      font-family: var(--font);
+      letter-spacing: 1px;
+      outline: none;
+      transition: all 0.25s;
+      width: 100%;
+      color: var(--text);
+      margin-top: 8px;
+      position: relative;
+    }
+    .accordion::after {
+      content: '▶';
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.7em;
+      color: var(--text-dim);
+      transition: transform 0.25s;
+    }
+    .accordion.active::after { transform: translateY(-50%) rotate(90deg); }
+    .accordion:hover, .accordion.active {
+      background: rgba(0,255,159,0.1);
+      border-color: var(--border);
+      box-shadow: 0 0 10px rgba(0,255,159,0.2);
+    }
+    .panel {
+      display: none;
+      padding: 16px 18px;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(0,255,159,0.15);
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      border-left: 3px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+    .panel.open { display: block; }
+
+    /* ── LISTS ── */
+    ul, ol {
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+    li {
+      color: var(--text-dim);
+      margin-bottom: 4px;
+      line-height: 1.6;
+    }
+    li::marker { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 0.8em;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      padding: 20px;
+      border-top: 1px solid rgba(0,255,159,0.1);
+    }
+
+    /* ── MISC ── */
+    p { color: var(--text-dim); margin-bottom: 10px; }
+    strong, b { color: var(--text); font-weight: normal; }
+    hr { border: none; border-top: 1px solid rgba(0,255,159,0.15); margin: 20px 0; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .hk-topbar { padding: 10px 16px; }
+      .container { padding: 20px 16px; }
+      h1 { font-size: 1.2em; }
+      table { font-size: 0.85em; }
+    }
+  </style>
+
+</head>
+<body>
+  <div class="hk-topbar">
+    <a href="../index.html" class="hk-back">← DASHBOARD</a>
+    <span class="hk-topbar-title">TOOLS CHEATSHEET<span class="hk-blink"></span></span>
+  </div>
+
+<div class="container">
+    <h1>GitHub Dorking Complete Cheatsheet</h1>
+
+    <button class="accordion">🔎 What is GitHub Dorking?</button>
+    <div class="panel section">
+      <p>GitHub Dorking is the art of using advanced search queries on GitHub to find sensitive data such as API keys, passwords, tokens, and private info leaked in public repos.</p>
+    </div>
+
+    <button class="accordion">⚙️ Basic Search Syntax</button>
+    <div class="panel section">
+      <table>
+        <tr><th>Query</th><th>Meaning</th></tr>
+        <tr><td><code>filename:.env</code></td><td>Find files named <code>.env</code></td></tr>
+        <tr><td><code>extension:env</code></td><td>Find files with <code>.env</code> extension</td></tr>
+        <tr><td><code>user:username</code></td><td>Search inside repos by specific user</td></tr>
+        <tr><td><code>org:organization</code></td><td>Search inside organization repos</td></tr>
+        <tr><td><code>path:/config</code></td><td>Search files inside config folders</td></tr>
+        <tr><td><code>language:python</code></td><td>Search repos using Python</td></tr>
+      </table>
+    </div>
+
+    <button class="accordion">🗝️ Common Sensitive Keywords</button>
+    <div class="panel section">
+      <ul>
+        <li>password</li>
+        <li>apikey</li>
+        <li>secret</li>
+        <li>token</li>
+        <li>passwd</li>
+        <li>ssh_key</li>
+        <li>aws_access_key_id</li>
+      </ul>
+    </div>
+
+    <button class="accordion">🔧 Sample Dorks</button>
+    <div class="panel section">
+      <ul>
+        <li><code>filename:id_rsa</code> — Find private SSH keys</li>
+        <li><code>extension:json password</code> — Find JSON files containing “password”</li>
+        <li><code>aws_access_key_id filename:.env</code> — Find AWS keys in env files</li>
+        <li><code>password in:file language:python</code> — Search password in Python files</li>
+        <li><code>path:/config token</code> — Tokens inside config directories</li>
+      </ul>
+    </div>
+
+    <button class="accordion">📋 Tips & Best Practices</button>
+    <div class="panel section">
+      <ul>
+        <li>Use quotes to search exact phrases: <code>"API_KEY"</code></li>
+        <li>Combine keywords and filters for precise results</li>
+        <li>Respect legal and ethical guidelines — only search public repos</li>
+        <li>Use GitHub’s advanced search page for GUI assistance</li>
+      </ul>
+    </div>
+
+    <footer style="text-align:center; margin-top: 40px; font-size: 0.9em; color: #aaa;">
+      Made with 💜 for Security Researchers & Bug Bounty Hunters
+    </footer>
+  </div>
+
+  <script>
+    document.querySelectorAll('.accordion').forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.classList.toggle('active');
+        const panel = this.nextElementSibling;
+        if (panel && panel.classList.contains('panel')) {
+          if (panel.style.display === 'block') {
+            panel.style.display = 'none';
+          } else {
+            panel.style.display = 'block';
+          }
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
